@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dashboard Admin - Jasa Tirta II</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Config -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f0f3ff",
+            "error-container": "#ffdad6",
+            "secondary-container": "#58e6ff",
+            "on-secondary-fixed": "#001f25",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#ecf1ff",
+            "on-tertiary-fixed": "#191c1e",
+            "secondary-fixed": "#a1efff",
+            "on-tertiary-container": "#b9bcbf",
+            "on-primary-fixed-variant": "#004398",
+            "on-tertiary-fixed-variant": "#44474a",
+            "primary-fixed": "#d9e2ff",
+            "on-primary-fixed": "#001a43",
+            "outline": "#737783",
+            "inverse-primary": "#afc6ff",
+            "secondary": "#006876",
+            "on-primary-container": "#9ebbff",
+            "on-background": "#111c2d",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c3c6d4",
+            "surface-dim": "#cfdaf2",
+            "primary": "#003175",
+            "tertiary-fixed": "#e0e3e6",
+            "surface": "#f9f9ff",
+            "background": "#f9f9ff",
+            "tertiary": "#323538",
+            "primary-container": "#0047a1",
+            "surface-container": "#e7eeff",
+            "surface-bright": "#f9f9ff",
+            "surface-container-highest": "#d8e3fb",
+            "inverse-surface": "#263143",
+            "error": "#ba1a1a",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#44d8f1",
+            "on-surface": "#111c2d",
+            "tertiary-fixed-dim": "#c4c7ca",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#dee8ff",
+            "on-primary": "#ffffff",
+            "surface-tint": "#265bb5",
+            "tertiary-container": "#494c4e",
+            "primary-fixed-dim": "#afc6ff",
+            "on-surface-variant": "#434752",
+            "on-secondary-fixed-variant": "#004e59",
+            "on-secondary-container": "#006573",
+            "surface-variant": "#d8e3fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "16px",
+            "container-max": "1280px",
+            "xl": "48px",
+            "md": "24px",
+            "base": "4px",
+            "xs": "8px",
+            "gutter": "24px",
+            "lg": "32px"
+          },
+          "fontFamily": {
+            "display": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Custom scrollbar for main area */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cfdaf2;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c3c6d4;
+    }
+  </style>
+</head>
+
+<body class="bg-surface-bright text-on-surface font-body-md antialiased flex h-screen overflow-hidden">
+
+  <!-- SideNavBar -->
+  <nav
+    class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col h-screen py-md px-sm z-50">
+    <!-- Brand Header -->
+    <div class="mb-xl flex items-center px-4">
+      <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
+        <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+      </div>
+      <div>
+        <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Admin</p>
+      </div>
+    </div>
+    <!-- Navigation Links -->
+    <div class="flex flex-col gap-base flex-1" id="sidebar-nav">
+      <!-- Active Tab: Ringkasan Stats -->
+      <a id="nav-dashboard"
+        class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all duration-200 bg-surface-container-high text-primary font-bold border-r-4 border-primary translate-x-1 cursor-pointer"
+        onclick="switchTab(event, 'tab-dashboard')">
+        <span class="material-symbols-outlined text-primary">dashboard</span>
+        <span class="font-label-md text-label-md">Ringkasan Stats</span>
+      </a>
+      <!-- Inactive Tab: Kelola Booking -->
+      <a id="nav-manage"
+        class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all text-on-surface-variant hover:bg-surface-container transition-all cursor-pointer"
+        onclick="switchTab(event, 'tab-manage')">
+        <span class="material-symbols-outlined">event_note</span>
+        <span class="font-label-md text-label-md">Kelola Booking</span>
+      </a>
+      <!-- Inactive Tab: Database Pengguna -->
+      <a id="nav-users"
+        class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all text-on-surface-variant hover:bg-surface-container transition-all cursor-pointer"
+        onclick="switchTab(event, 'tab-users')">
+        <span class="material-symbols-outlined">group</span>
+        <span class="font-label-md text-label-md">Data Pengguna</span>
+      </a>
+      <!-- Bottom User Profile & Logout -->
+      <div class="mt-auto pt-4 border-t border-outline-variant/30 flex flex-col gap-sm">
+        <div class="flex items-center gap-xs px-sm mb-2">
+          <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-outline">
+            <span class="material-symbols-outlined text-[24px]">account_circle</span>
+          </div>
+          <div>
+            <p class="font-label-sm text-sm font-semibold text-on-surface" id="sidebar-user-name">Loading...</p>
+            <p class="text-[10px] text-on-surface-variant">Administrator</p>
+          </div>
+        </div>
+        <button onclick="logout()"
+          class="w-full flex items-center justify-center gap-xs py-2 px-4 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-sm">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          Keluar
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-1 ml-64 h-full overflow-y-auto bg-surface-container-low">
+    <div class="max-w-[1400px] mx-auto p-lg pt-xl">
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm mb-lg">
+        <div>
+          <h1 class="font-display text-headline-lg text-primary mb-base" id="page-title">Dashboard Overview</h1>
+          <p class="font-body-md text-on-surface-variant" id="page-desc">Portal pemantauan reservasi lapangan Jasa Tirta
+            II Sport Center</p>
+        </div>
+        <a href="index.html"
+          class="flex items-center gap-xs px-sm py-xs border border-outline-variant rounded-lg bg-surface text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          Lihat Beranda
+        </a>
+      </div>
+
+      <!-- Tab: Dashboard (Overview & Calendar) -->
+      <section id="tab-dashboard" class="tab-content space-y-6">
+        <!-- Stat Cards Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-sm mb-xl">
+          <div
+            class="bg-surface rounded-xl p-md shadow-sm border-l-4 border-secondary-container flex flex-col justify-between h-[120px]">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs">Total
+              Pelanggan</span>
+            <span class="font-display text-display text-on-surface leading-none mt-sm font-bold"
+              id="stat-total-users">0</span>
+          </div>
+          <div
+            class="bg-surface rounded-xl p-md shadow-sm border-l-4 border-primary flex flex-col justify-between h-[120px]">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs">Total
+              Booking</span>
+            <span class="font-display text-display text-on-surface leading-none mt-sm font-bold"
+              id="stat-total-bookings">0</span>
+          </div>
+          <div
+            class="bg-surface rounded-xl p-md shadow-sm border-l-4 border-tertiary flex flex-col justify-between h-[120px]">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs">Booking
+              Hari Ini</span>
+            <span class="font-display text-display text-on-surface leading-none mt-sm font-bold"
+              id="stat-bookings-today">0</span>
+          </div>
+          <div
+            class="bg-surface rounded-xl p-md shadow-sm border-l-4 border-secondary flex flex-col justify-between h-[120px]">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs">Booking
+              Minggu Ini</span>
+            <span class="font-display text-display text-on-surface leading-none mt-sm font-bold"
+              id="stat-bookings-week">0</span>
+          </div>
+          <div
+            class="bg-surface rounded-xl p-md shadow-sm border-l-4 border-error flex flex-col justify-between h-[120px]">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs">Booking
+              Bulan Ini</span>
+            <span class="font-display text-display text-on-surface leading-none mt-sm font-bold"
+              id="stat-bookings-month">0</span>
+          </div>
+        </div>
+
+        <!-- Calendar Section -->
+        <div class="bg-surface rounded-xl p-md border border-outline-variant/30 shadow-sm">
+          <!-- Calendar Header -->
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-md gap-sm">
+            <div>
+              <div class="flex items-center gap-xs">
+                <span class="material-symbols-outlined text-primary text-[28px]">calendar_month</span>
+                <h2 class="font-headline-md text-headline-md text-primary">Kalender Jadwal Mingguan</h2>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-base">Pantau nama penyewa dan slot jam
+                terisi secara real-time. Klik pada slot terisi untuk mengelolanya.</p>
+            </div>
+            <div
+              class="flex items-center gap-sm bg-surface-container-low rounded-lg p-xs border border-outline-variant/50">
+              <button class="p-xs hover:bg-surface-container rounded transition-colors flex items-center justify-center"
+                id="admin-btn-prev-week">
+                <span class="material-symbols-outlined text-on-surface-variant text-[20px]">chevron_left</span>
+              </button>
+              <span class="font-label-md text-label-md px-sm text-on-surface" id="admin-week-label">Loading...</span>
+              <button class="p-xs hover:bg-surface-container rounded transition-colors flex items-center justify-center"
+                id="admin-btn-next-week">
+                <span class="material-symbols-outlined text-on-surface-variant text-[20px]">chevron_right</span>
+              </button>
+            </div>
+          </div>
+          <!-- Calendar Table -->
+          <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+            <table class="w-full text-left border-collapse min-w-[1000px]">
+              <thead>
+                <tr
+                  class="bg-surface-variant/50 text-on-surface font-label-md text-label-md border-b border-outline-variant/50"
+                  id="admin-calendar-header-row">
+                  <!-- Rendered dynamically by JS -->
+                </tr>
+              </thead>
+              <tbody class="font-body-sm text-body-sm" id="admin-calendar-body">
+                <!-- Rendered dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Add Booking Button -->
+        <div class="mt-lg flex justify-end mt-6">
+          <button onclick="switchTab(null, 'tab-manage')"
+            class="bg-primary text-on-primary hover:bg-primary/90 px-6 py-2.5 rounded-lg font-label-md text-label-md transition-colors shadow-sm flex items-center gap-xs"
+            style="background-color: #0047a1;">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            Buat Booking Baru
+          </button>
+        </div>
+      </section>
+
+      <!-- Tab: Manage Bookings -->
+      <section id="tab-manage" class="tab-content hidden space-y-6">
+        <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <h2 class="text-lg font-bold text-primary">Daftar Seluruh Reservasi GOR</h2>
+            <div class="flex items-center gap-2 text-sm">
+              <label for="filter-date" class="text-on-surface-variant">Filter Tanggal:</label>
+              <input type="date" id="filter-date"
+                class="border border-outline-variant rounded px-3 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary" />
+              <button onclick="clearDateFilter()"
+                class="px-4 py-1.5 border border-outline-variant rounded hover:bg-surface-container transition-colors text-sm font-medium">Reset</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+            <table class="w-full text-left border-collapse min-w-[1000px]">
+              <thead class="bg-surface-container-low border-b border-outline-variant">
+                <tr class="text-on-surface-variant font-label-md text-sm">
+                  <th class="px-6 py-4">Nama Pelanggan</th>
+                  <th class="px-6 py-4">Tanggal</th>
+                  <th class="px-6 py-4">Cabang Olahraga</th>
+                  <th class="px-6 py-4">Jam &amp; Durasi</th>
+                  <th class="px-6 py-4">Total Biaya</th>
+                  <th class="px-6 py-4">Status</th>
+                  <th class="px-6 py-4">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/50" id="all-bookings-tbody">
+                <!-- Rendered dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Database Users -->
+      <section id="tab-users" class="tab-content hidden">
+        <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+          <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+            <table class="w-full text-left border-collapse min-w-[1000px]">
+              <thead class="bg-surface-container-low border-b border-outline-variant">
+                <tr class="text-on-surface-variant font-label-md text-sm">
+                  <th class="px-6 py-4">Nama Pengguna</th>
+                  <th class="px-6 py-4">Alamat Email</th>
+                  <th class="px-6 py-4">Nomor HP</th>
+                  <th class="px-6 py-4">Akses (Role)</th>
+                  <th class="px-6 py-4">Tanggal Registrasi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/50" id="all-users-tbody">
+                <!-- Rendered dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="fixed top-5 right-5 z-50 flex flex-col gap-2" id="toast-container"></div>
+
+  <script>
+    // Validation
+    const token = localStorage.getItem('token');
+    const userJson = localStorage.getItem('user');
+
+    if (!token || !userJson) {
+      window.location.href = 'login.html';
+    }
+
+    const adminUser = JSON.parse(userJson);
+    if (adminUser.role !== 'admin') {
+      window.location.href = 'dashboard.html';
+    }
+
+    // Elements
+    document.getElementById('sidebar-user-name').innerText = adminUser.nama;
+    const filterDateInput = document.getElementById('filter-date');
+    const toastContainer = document.getElementById('toast-container');
+
+    // Toast function using Tailwind CSS
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300 transform translate-y-2 opacity-0 ${type === 'success'
+        ? 'bg-green-50 text-green-800 border-green-200'
+        : 'bg-red-50 text-red-800 border-red-200'
+        }`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[20px]">${type === 'success' ? 'check_circle' : 'cancel'}</span>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+      toastContainer.appendChild(toast);
+
+      // trigger transition
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Logout
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    // Switch Tabs
+    function switchTab(e, tabId) {
+      if (e) e.preventDefault();
+
+      // Sidebar buttons navigation classes sync
+      const activeNavClasses = "bg-surface-container-high text-primary font-bold border-r-4 border-primary translate-x-1 shadow-sm".split(" ");
+      const inactiveNavClasses = "text-on-surface-variant hover:bg-surface-container transition-all".split(" ");
+
+      document.querySelectorAll('#sidebar-nav a').forEach(item => {
+        activeNavClasses.forEach(cls => item.classList.remove(cls));
+        inactiveNavClasses.forEach(cls => item.classList.add(cls));
+      });
+
+      // Set active nav link
+      const targetNavId = tabId === 'tab-dashboard' ? 'nav-dashboard' : tabId === 'tab-manage' ? 'nav-manage' : 'nav-users';
+      const targetNav = document.getElementById(targetNavId);
+      if (targetNav) {
+        inactiveNavClasses.forEach(cls => targetNav.classList.remove(cls));
+        activeNavClasses.forEach(cls => targetNav.classList.add(cls));
+      }
+
+      // Hide all content sections
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+
+      // Show selected content section
+      document.getElementById(tabId).classList.remove('hidden');
+
+      // Update Header Text dynamically
+      const titles = {
+        'tab-dashboard': 'Dashboard Overview',
+        'tab-manage': 'Kelola Booking Lapangan',
+        'tab-users': 'Database Pengguna'
+      };
+      const descs = {
+        'tab-dashboard': 'Portal pemantauan reservasi lapangan GOR Jasa Tirta II Sport Center',
+        'tab-manage': 'Kelola persetujuan reservasi masuk, penyelesaian, dan pembatalan sewa',
+        'tab-users': 'Daftar database seluruh pelanggan dan administrator GOR yang terdaftar'
+      };
+
+      document.getElementById('page-title').innerText = titles[tabId];
+      document.getElementById('page-desc').innerText = descs[tabId];
+
+      // Load data
+      if (tabId === 'tab-dashboard') {
+        loadAdminStats();
+        loadAdminWeeklySchedule();
+      } else if (tabId === 'tab-manage') {
+        loadAllBookings();
+      } else if (tabId === 'tab-users') {
+        loadAllUsers();
+      }
+    }
+
+    function triggerManageTab() {
+      switchTab(null, 'tab-manage');
+    }
+
+    function clearDateFilter() {
+      filterDateInput.value = '';
+      loadAllBookings();
+    }
+
+    function formatRupiah(num) {
+      return 'Rp' + parseFloat(num).toLocaleString('id-ID');
+    }
+
+    function formatDateIndo(dateStr) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateStr).toLocaleDateString('id-ID', options);
+    }
+
+    // Load Overview Stats
+    async function loadAdminStats() {
+      try {
+        const response = await fetch('/api/dashboard/admin', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          logout();
+          return;
+        }
+
+        const result = await response.json();
+        if (result.success) {
+          const stats = result.stats;
+          document.getElementById('stat-total-users').innerText = stats.totalUsers;
+          document.getElementById('stat-total-bookings').innerText = stats.totalBookings;
+          document.getElementById('stat-bookings-today').innerText = stats.bookingsToday;
+          document.getElementById('stat-bookings-week').innerText = stats.bookingsThisWeek;
+          document.getElementById('stat-bookings-month').innerText = stats.bookingsThisMonth;
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat statistik admin.', 'error');
+      }
+    }
+
+    // Load All Bookings
+    async function loadAllBookings() {
+      const filterDate = filterDateInput.value;
+      let url = '/api/bookings';
+      if (filterDate) {
+        url += `?date=${filterDate}`;
+      }
+
+      const tbody = document.getElementById('all-bookings-tbody');
+      tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat data booking...</td></tr>';
+
+      try {
+        const response = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        tbody.innerHTML = '';
+
+        if (result.success) {
+          if (result.bookings.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ditemukan data pemesanan GOR.</td></tr>';
+          } else {
+            result.bookings.forEach(b => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+
+              let actionsHtml = '<span class="text-xs text-on-surface-variant font-medium">Tidak ada aksi</span>';
+
+              if (b.status === 'pending') {
+                actionsHtml = `
+                  <div class="flex gap-2">
+                    <button onclick="updateStatus(${b.id}, 'approved')" class="px-3 py-1 bg-primary text-white text-xs font-semibold rounded hover:bg-opacity-95 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Setujui</button>
+                    <button onclick="updateStatus(${b.id}, 'cancelled')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
+                  </div>
+                `;
+              } else if (b.status === 'approved') {
+                actionsHtml = `
+                  <div class="flex gap-2">
+                    <button onclick="updateStatus(${b.id}, 'completed')" class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">done_all</span> Selesai</button>
+                    <button onclick="updateStatus(${b.id}, 'cancelled')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
+                  </div>
+                `;
+              }
+
+              let badgeStatusColor = "bg-gray-100 text-gray-700";
+              if (b.status.toLowerCase() === 'approved' || b.status.toLowerCase() === 'upcoming') {
+                badgeStatusColor = "bg-green-50 text-green-700 border border-green-200";
+              } else if (b.status.toLowerCase() === 'pending') {
+                badgeStatusColor = "bg-yellow-50 text-yellow-700 border border-yellow-200";
+              } else if (b.status.toLowerCase() === 'rejected' || b.status.toLowerCase() === 'cancelled') {
+                badgeStatusColor = "bg-red-50 text-red-700 border border-red-200";
+              } else if (b.status.toLowerCase() === 'completed') {
+                badgeStatusColor = "bg-gray-100 text-gray-700 border border-gray-200";
+              }
+
+              tr.innerHTML = `
+                <td class="px-6 py-4">
+                  <strong class="text-on-surface font-semibold">${b.customer_nama}</strong>
+                  <div class="text-[11px] text-on-surface-variant mt-1 space-y-0.5">
+                    <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span> ${b.customer_email}</div>
+                    <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">phone</span> ${b.customer_nomor_hp}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 font-label-md text-sm text-on-surface"><strong>${formatDateIndo(b.booking_date)}</strong></td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-semibold">${b.sport}</span></td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} <span class="text-xs">(${b.duration} Jam)</span></td>
+                <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(b.total_price)}</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${badgeStatusColor}">${b.status}</span></td>
+                <td class="px-6 py-4">${actionsHtml}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat data booking.', 'error');
+      }
+    }
+
+    // Action status updater
+    async function updateStatus(id, newStatus) {
+      if (newStatus === 'cancelled' && !confirm('Apakah Anda yakin ingin membatalkan booking ini?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/bookings/${id}/status`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const result = await response.json();
+
+        if (response.status === 200) {
+          showToast(result.message, 'success');
+          loadAllBookings();
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memperbarui status booking.', 'error');
+      }
+    }
+
+    // Load Database Users
+    async function loadAllUsers() {
+      const tbody = document.getElementById('all-users-tbody');
+      tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat data pengguna...</td></tr>';
+
+      try {
+        const response = await fetch('/api/auth/users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        tbody.innerHTML = '';
+        if (result.success) {
+          if (result.users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada data pengguna.</td></tr>';
+          } else {
+            result.users.forEach(u => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+              tr.innerHTML = `
+                <td class="px-6 py-4 font-semibold text-on-surface"><strong>${u.nama}</strong></td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${u.email}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${u.nomor_hp}</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-blue-50 text-primary border border-blue-200'}">${u.role}</span></td>
+                <td class="px-6 py-4 text-xs text-on-surface-variant">${new Date(u.created_at).toLocaleString('id-ID')}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-red-500 font-semibold">Gagal memuat data pengguna.</td></tr>';
+      }
+    }
+
+    // Admin Weekly Calendar state
+    let adminCurrentWeekMonday = getMonday(new Date());
+
+    function getMonday(d) {
+      d = new Date(d);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
+
+    function formatDateIndoShort(dateObj) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+    }
+
+    async function loadAdminWeeklySchedule() {
+      const weekDates = [];
+      const daysIndo = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+      for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(adminCurrentWeekMonday);
+        dayDate.setDate(adminCurrentWeekMonday.getDate() + i);
+        weekDates.push({
+          dateStr: dayDate.toISOString().split('T')[0],
+          dayName: daysIndo[i],
+          formatted: `${dayDate.getDate().toString().padStart(2, '0')}/${(dayDate.getMonth() + 1).toString().padStart(2, '0')}`,
+          obj: dayDate
+        });
+      }
+
+      // Update week label
+      const startStr = formatDateIndoShort(weekDates[0].obj);
+      const endStr = formatDateIndoShort(weekDates[6].obj);
+      document.getElementById('admin-week-label').innerText = `${startStr} - ${endStr}`;
+
+      const start_date = weekDates[0].dateStr;
+      const end_date = weekDates[6].dateStr;
+
+      // Render Headers
+      const headerRow = document.getElementById('admin-calendar-header-row');
+      headerRow.innerHTML = '<th class="p-sm text-center border-r border-outline-variant/50 text-primary w-[120px] py-4">Jam</th>';
+      weekDates.forEach(day => {
+        headerRow.innerHTML += `<th class="p-sm text-center border-r border-outline-variant/50 py-4">${day.dayName}<br><span class="text-xs text-on-surface-variant font-normal">${day.formatted}</span></th>`;
+      });
+
+      const calendarBody = document.getElementById('admin-calendar-body');
+      calendarBody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-on-surface-variant font-medium"><span class="inline-block w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin mr-2"></span> Memuat jadwal mingguan...</td></tr>`;
+
+      try {
+        const response = await fetch(`/api/bookings?start_date=${start_date}&end_date=${end_date}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          renderAdminWeeklyGrid(weekDates, result.bookings);
+        } else {
+          calendarBody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-red-500 font-semibold">${result.message}</td></tr>`;
+        }
+      } catch (err) {
+        console.error(err);
+        calendarBody.innerHTML = '<tr><td colspan="8" class="py-10 text-center text-red-500 font-semibold">Gagal memuat jadwal mingguan.</td></tr>';
+      }
+    }
+
+    function renderAdminWeeklyGrid(weekDates, bookings) {
+      const calendarBody = document.getElementById('admin-calendar-body');
+      calendarBody.innerHTML = '';
+
+      for (let h = 8; h < 22; h++) {
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-outline-variant/50 hover:bg-surface-container-low/30 transition-colors";
+        const hourStr = `${h.toString().padStart(2, '0')}:00`;
+        const nextHourStr = `${(h + 1).toString().padStart(2, '0')}:00`;
+
+        tr.innerHTML = `<td class="p-sm text-center border-r border-outline-variant/50 font-label-md text-label-md text-secondary py-4 font-semibold">${hourStr} -<br/>${nextHourStr}</td>`;
+
+        weekDates.forEach(day => {
+          const cellDate = day.dateStr;
+
+          const activeBooking = bookings.find(b => {
+            if (b.booking_date !== cellDate) return false;
+            if (b.status === 'cancelled') return false;
+
+            const bStart = parseInt(b.start_time.split(':')[0], 10);
+            const bEnd = parseInt(b.end_time.split(':')[0], 10);
+            return bStart <= h && bEnd > h;
+          });
+
+          const td = document.createElement('td');
+          td.className = "p-sm text-center border-r border-outline-variant/50 py-4";
+          td.style.verticalAlign = 'middle';
+
+          if (activeBooking) {
+            let statusBadge = "bg-yellow-50 text-yellow-700 border border-yellow-200";
+            if (activeBooking.status.toLowerCase() === 'approved') {
+              statusBadge = "bg-green-50 text-green-700 border border-green-200";
+            } else if (activeBooking.status.toLowerCase() === 'completed') {
+              statusBadge = "bg-gray-100 text-gray-700 border border-gray-200";
+            }
+
+            td.className += " bg-error-container/10 cursor-pointer hover:bg-error-container/20 transition-all";
+            td.innerHTML = `
+              <div class="flex flex-col items-center">
+                <span class="font-bold text-on-surface text-xs">${activeBooking.customer_nama}</span>
+                <div class="flex items-center gap-1 mt-1">
+                  <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-full ${statusBadge}">${activeBooking.status}</span>
+                  <span class="text-[10px] text-on-surface-variant">(${activeBooking.sport})</span>
+                </div>
+              </div>
+            `;
+            td.addEventListener('click', () => {
+              switchTab(null, 'tab-manage');
+              filterDateInput.value = cellDate;
+              loadAllBookings();
+            });
+          } else {
+            td.innerHTML = `
+              <div class="flex flex-col items-center gap-1 opacity-70">
+                <span class="material-symbols-outlined text-[16px] text-green-600">check_circle</span>
+                <span class="text-xs text-on-surface-variant font-medium">Kosong</span>
+              </div>
+            `;
+          }
+
+          tr.appendChild(td);
+        });
+
+        calendarBody.appendChild(tr);
+      }
+    }
+
+    // Week navigation listeners
+    document.getElementById('admin-btn-prev-week').addEventListener('click', () => {
+      adminCurrentWeekMonday.setDate(adminCurrentWeekMonday.getDate() - 7);
+      loadAdminWeeklySchedule();
+    });
+
+    document.getElementById('admin-btn-next-week').addEventListener('click', () => {
+      adminCurrentWeekMonday.setDate(adminCurrentWeekMonday.getDate() + 7);
+      loadAdminWeeklySchedule();
+    });
+
+    // Initial load
+    switchTab(null, 'tab-dashboard');
+  </script>
+</body>
+
+</html>

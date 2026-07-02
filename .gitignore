@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+# Environment variables / secrets (IMPORTANT: Do not upload this to GitHub!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Databases / Data volumes
+db_data/
+mysql_data/
+
+# Editor / IDE settings
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

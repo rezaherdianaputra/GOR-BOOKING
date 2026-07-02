@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dashboard Customer - Jasa Tirta II Sport Center</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f0f3ff",
+            "error-container": "#ffdad6",
+            "secondary-container": "#58e6ff",
+            "on-secondary-fixed": "#001f25",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#ecf1ff",
+            "on-tertiary-fixed": "#191c1e",
+            "secondary-fixed": "#a1efff",
+            "on-tertiary-container": "#b9bcbf",
+            "on-primary-fixed-variant": "#004398",
+            "on-tertiary-fixed-variant": "#44474a",
+            "primary-fixed": "#d9e2ff",
+            "on-primary-fixed": "#001a43",
+            "outline": "#737783",
+            "inverse-primary": "#afc6ff",
+            "secondary": "#006876",
+            "on-primary-container": "#9ebbff",
+            "on-background": "#111c2d",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c3c6d4",
+            "surface-dim": "#cfdaf2",
+            "primary": "#003175",
+            "tertiary-fixed": "#e0e3e6",
+            "surface": "#f9f9ff",
+            "background": "#f9f9ff",
+            "tertiary": "#323538",
+            "primary-container": "#0047a1",
+            "surface-container": "#e7eeff",
+            "surface-bright": "#f9f9ff",
+            "surface-container-highest": "#d8e3fb",
+            "inverse-surface": "#263143",
+            "error": "#ba1a1a",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#44d8f1",
+            "on-surface": "#111c2d",
+            "tertiary-fixed-dim": "#c4c7ca",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#dee8ff",
+            "on-primary": "#ffffff",
+            "surface-tint": "#265bb5",
+            "tertiary-container": "#494c4e",
+            "primary-fixed-dim": "#afc6ff",
+            "on-surface-variant": "#434752",
+            "on-secondary-fixed-variant": "#004e59",
+            "on-secondary-container": "#006573",
+            "surface-variant": "#d8e3fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "16px",
+            "container-max": "1280px",
+            "xl": "48px",
+            "md": "24px",
+            "base": "4px",
+            "xs": "8px",
+            "gutter": "24px",
+            "lg": "32px"
+          },
+          "fontFamily": {
+            "display": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f0f3f8;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="font-body-md text-on-surface antialiased min-h-screen flex">
+
+  <!-- SideNavBar -->
+  <aside
+    class="bg-surface dark:bg-surface-dim h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col py-md px-sm z-50">
+    <div class="mb-xl flex items-center px-4">
+      <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
+        <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+      </div>
+      <div>
+        <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Sport Center</p>
+      </div>
+    </div>
+    <nav class="flex-1 space-y-2" id="sidebar-nav">
+      <!-- Active: Booking Lapangan -->
+      <a id="nav-booking"
+        class="flex items-center px-4 py-3 rounded-lg bg-surface-container-high text-primary font-bold border-r-4 border-primary shadow-sm group cursor-pointer"
+        onclick="switchTab(event, 'tab-booking')">
+        <span class="material-symbols-outlined mr-4">sports_tennis</span>
+        <span class="font-label-md text-label-md">Booking Lapangan</span>
+      </a>
+      <!-- Inactive: Riwayat Booking -->
+      <a id="nav-history"
+        class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer"
+        onclick="switchTab(event, 'tab-history')">
+        <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">history</span>
+        <span class="font-label-md text-label-md">Riwayat Booking</span>
+      </a>
+      <!-- Inactive: Profil Saya -->
+      <a id="nav-profile"
+        class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer"
+        onclick="switchTab(event, 'tab-profile')">
+        <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">person</span>
+        <span class="font-label-md text-label-md">Profil Saya</span>
+      </a>
+    </nav>
+    <div class="mt-auto border-t border-outline-variant pt-4 px-4">
+      <div class="flex items-center mb-4">
+        <div
+          class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden mr-3 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[36px] text-outline">account_circle</span>
+        </div>
+        <div>
+          <p class="font-label-md text-label-md font-bold text-on-surface" id="sidebar-user-name">Loading...</p>
+          <p class="font-label-sm text-label-sm text-on-surface-variant">Pelanggan</p>
+        </div>
+      </div>
+      <button onclick="logout()"
+        class="w-full flex items-center justify-center py-2 px-4 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors font-label-md">
+        <span class="material-symbols-outlined mr-2 text-[18px]">logout</span>
+        Keluar
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="ml-64 flex-1 flex flex-col min-h-screen pb-12">
+    <!-- Header -->
+    <header class="pt-10 pb-6 px-10 flex justify-between items-end">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2 tracking-tight" id="page-title">Pesan Lapangan
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant" id="page-desc">Selamat datang kembali di portal
+          booking Jasa Tirta II Sport Center</p>
+      </div>
+      <a href="index.html"
+        class="flex items-center px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface hover:bg-surface-container transition-colors shadow-sm font-label-md">
+        <span class="material-symbols-outlined mr-2 text-[18px]">home</span>
+        Lihat Beranda
+      </a>
+    </header>
+
+    <!-- Tab: Booking -->
+    <section id="tab-booking" class="tab-content px-10 space-y-6">
+      <!-- Top Day Selector Row -->
+      <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-6">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <div class="flex items-center text-primary">
+            <span class="material-symbols-outlined mr-2">calendar_month</span>
+            <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Jadwal Lapangan Jasa Tirta II</h3>
+          </div>
+          <div class="flex items-center space-x-4 flex-wrap gap-2">
+            <div class="flex items-center text-on-surface-variant text-sm">
+              <span class="material-symbols-outlined text-[18px] mr-1">event</span>
+              <span class="mr-2">Lompat ke Tanggal:</span>
+              <input
+                class="border border-outline-variant rounded px-2 py-1 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary"
+                type="date" id="booking-date-picker" />
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="w-8 h-8 rounded border border-outline-variant flex items-center justify-center hover:bg-surface-container text-on-surface-variant"
+                id="btn-prev-week">
+                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+              </button>
+              <span class="font-label-md text-sm font-semibold" id="week-label">Loading...</span>
+              <button
+                class="w-8 h-8 rounded border border-outline-variant flex items-center justify-center hover:bg-surface-container text-on-surface-variant"
+                id="btn-next-week">
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Days Horizontal Strip -->
+        <div class="days-strip-container flex space-x-3 overflow-x-auto hide-scrollbar pb-2" id="days-strip">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Booking Grid (Split Screen) -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+        <!-- Left: Court Info & Time Slots -->
+        <div class="xl:col-span-8 space-y-6">
+          <!-- Court Details Card -->
+          <div
+            class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-6 flex flex-col md:flex-row gap-6">
+            <div class="md:w-2/5 relative rounded-xl overflow-hidden shadow-inner group">
+              <img alt="Jasa Tirta II Lapangan Utama"
+                class="w-full h-full object-cover min-h-[180px] transition-transform duration-500 group-hover:scale-105"
+                src="images/gor2.jpeg" />
+            </div>
+            <div class="md:w-3/5 flex flex-col justify-center">
+              <div class="flex items-center mb-2">
+                <h3 class="font-headline-md text-xl font-bold text-on-surface mr-2">Jasa Tirta II Lapangan Utama</h3>
+              </div>
+              <p class="font-body-sm text-sm text-on-surface-variant mb-4 leading-relaxed">
+                Lapangan indoor premium dengan permukaan lantai parket kayu berkualitas tinggi. Dilengkapi dengan
+                pencahayaan LED standar kompetisi, area tribun penonton, toilet bersih, dan kantin.
+              </p>
+              <div class="flex flex-wrap gap-4 mb-5">
+                <div class="flex items-center text-on-surface-variant text-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] mr-1.5">sports_basketball</span>
+                  Multifungsi
+                </div>
+                <div class="flex items-center text-on-surface-variant text-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] mr-1.5">roofing</span>
+                  Indoor
+                </div>
+                <div class="flex items-center text-on-surface-variant text-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] mr-1.5">layers</span>
+                  Lantai Parket Kayu
+                </div>
+              </div>
+              <div>
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container text-on-primary text-xs font-semibold">
+                  <span id="available-slots-count">0</span> Jadwal Tersedia
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time Slots Selector Card -->
+          <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-6">
+            <div class="flex items-center mb-2">
+              <span class="material-symbols-outlined text-primary mr-2">schedule</span>
+              <h3 class="font-headline-md text-[18px] font-semibold text-on-surface">Pilih Waktu Sewa</h3>
+            </div>
+            <p class="font-body-sm text-sm text-on-surface-variant mb-6">
+              Durasi default per slot adalah 60 menit. Klik pada slot waktu yang tersedia untuk memesan.
+            </p>
+            <!-- Slots Container -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" id="slots-grid-container">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Booking Form Form -->
+        <div class="xl:col-span-4">
+          <div
+            class="glass-card rounded-2xl shadow-[0_10px_30px_rgba(0,49,117,0.08)] border border-surface-variant p-6 sticky top-10">
+            <div class="flex items-center mb-6 pb-4 border-b border-outline-variant/50">
+              <span class="material-symbols-outlined text-primary mr-2">edit_document</span>
+              <h3 class="font-headline-md text-[18px] font-bold text-on-surface">Formulir Pemesanan</h3>
+            </div>
+            <form id="court-booking-form" class="space-y-5">
+              <!-- Date -->
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Tanggal Pilihan</label>
+                <input
+                  class="w-full bg-surface-container-low border border-transparent rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:outline-none"
+                  id="form-date" readonly type="text" />
+              </div>
+              <!-- Time -->
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Jam Mulai</label>
+                <input
+                  class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer placeholder-outline"
+                  id="form-start-time" placeholder="Pilih jam dari kalender" readonly type="text" />
+              </div>
+              <!-- Duration -->
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Durasi Sewa</label>
+                <div class="relative">
+                  <select id="form-duration"
+                    class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                    <option value="1">1 Jam</option>
+                    <option value="2">2 Jam</option>
+                    <option value="3">3 Jam</option>
+                    <option value="4">4 Jam</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+              <!-- Sport -->
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Cabang Olahraga</label>
+                <div class="relative">
+                  <select id="form-sport"
+                    class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                    <option value="">Pilih olahraga</option>
+                    <option value="Basket">Bola Basket</option>
+                    <option value="Badminton">Bulu Tangkis</option>
+                    <option value="Futsal">Futsal</option>
+                    <option value="Volley">Volley</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+              <!-- Summary Box -->
+              <div class="bg-[#f2f9ff] border border-blue-100 rounded-xl p-4 mt-6">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-body-sm text-sm text-on-surface-variant">Tarif Sewa:</span>
+                  <span class="font-body-sm text-sm text-on-surface">Rp100.000 / Jam</span>
+                </div>
+                <div class="h-px w-full bg-blue-100 my-3"></div>
+                <div class="flex justify-between items-center">
+                  <span class="font-label-md font-bold text-on-surface">Total Biaya:</span>
+                  <span class="font-headline-md text-lg text-[#00a3ff] font-bold" id="form-total-price">Rp100.000</span>
+                </div>
+              </div>
+              <!-- Submit Button -->
+              <button
+                class="w-full bg-primary-container hover:bg-primary text-on-primary font-label-md font-bold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-sm hover:shadow-md transform active:scale-95"
+                type="submit">
+                <span class="material-symbols-outlined mr-2 text-[20px]">check_circle</span>
+                Ajukan Booking
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: History -->
+    <section id="tab-history" class="tab-content hidden px-10">
+      <div
+        class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low border-b border-outline-variant">
+              <tr class="text-on-surface-variant font-label-md text-sm">
+                <th class="px-6 py-4">Tanggal</th>
+                <th class="px-6 py-4">Cabang Olahraga</th>
+                <th class="px-6 py-4">Jam</th>
+                <th class="px-6 py-4">Durasi</th>
+                <th class="px-6 py-4">Total Biaya</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4">Dibuat Pada</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/50" id="history-bookings-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Profile -->
+    <section id="tab-profile" class="tab-content hidden px-10">
+      <div class="max-w-3xl w-full">
+        <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-8">
+          <div class="flex items-center mb-8 pb-4 border-b border-outline-variant/50">
+            <span class="material-symbols-outlined text-primary mr-3">manage_accounts</span>
+            <h3 class="font-headline-md text-[20px] font-bold text-on-surface">Pengaturan Akun</h3>
+          </div>
+          <form id="profile-update-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Nama Lengkap</label>
+                <input
+                  class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  type="text" id="profile-name" required />
+              </div>
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Alamat Email</label>
+                <input
+                  class="w-full bg-gray-100 border border-outline-variant rounded-lg px-4 py-2.5 text-gray-500 font-body-md cursor-not-allowed focus:outline-none"
+                  type="email" id="profile-email" readonly />
+              </div>
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Nomor HP / WhatsApp</label>
+                <input
+                  class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  type="tel" id="profile-phone" required />
+              </div>
+              <div>
+                <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Kata Sandi Baru
+                  (Opsional)</label>
+                <input
+                  class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  placeholder="Kosongkan jika tidak ingin diubah" type="password" id="profile-password" />
+              </div>
+            </div>
+            <div class="pt-4 flex justify-end">
+              <button
+                class="bg-primary hover:bg-[#003d8a] text-white font-label-md font-bold px-8 py-3 rounded-xl transition-all duration-200 flex items-center justify-center shadow-sm hover:shadow-md transform active:scale-95"
+                type="submit">
+                <span class="material-symbols-outlined mr-2 text-[20px]">save</span>Simpan Perubahan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="fixed top-5 right-5 z-50 flex flex-col gap-2" id="toast-container"></div>
+
+  <script>
+    // Validation
+    const token = localStorage.getItem('token');
+    const userJson = localStorage.getItem('user');
+
+    if (!token || !userJson) {
+      window.location.href = 'login.html';
+    }
+
+    const user = JSON.parse(userJson);
+    if (user.role !== 'customer') {
+      window.location.href = 'admin.html';
+    }
+
+    // Elements
+    document.getElementById('sidebar-user-name').innerText = user.nama;
+    const toastContainer = document.getElementById('toast-container');
+
+    // Setup date inputs
+    const bookingDatePicker = document.getElementById('booking-date-picker');
+    const formDate = document.getElementById('form-date');
+    const formDuration = document.getElementById('form-duration');
+    const formTotalPrice = document.getElementById('form-total-price');
+
+    const today = new Date();
+    const offset = today.getTimezoneOffset();
+    const localToday = new Date(today.getTime() - (offset * 60 * 1000));
+    const todayStr = localToday.toISOString().split('T')[0];
+
+    bookingDatePicker.value = todayStr;
+    bookingDatePicker.min = todayStr;
+    formDate.value = todayStr;
+
+    // Toast function
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300 transform translate-y-2 opacity-0 ${type === 'success'
+        ? 'bg-green-50 text-green-800 border-green-200'
+        : 'bg-red-50 text-red-800 border-red-200'
+        }`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[20px]">${type === 'success' ? 'check_circle' : 'cancel'}</span>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+      toastContainer.appendChild(toast);
+
+      // trigger transition
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Logout
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    // Switch Tabs
+    function switchTab(e, tabId) {
+      if (e) e.preventDefault();
+
+      // Sidebar buttons navigation classes sync
+      const activeNavClasses = "bg-surface-container-high text-primary font-bold border-r-4 border-primary shadow-sm".split(" ");
+      const inactiveNavClasses = "text-on-surface-variant hover:bg-surface-container transition-all".split(" ");
+
+      document.querySelectorAll('#sidebar-nav a').forEach(item => {
+        activeNavClasses.forEach(cls => item.classList.remove(cls));
+        inactiveNavClasses.forEach(cls => item.classList.add(cls));
+      });
+
+      // Set active nav link
+      const targetNavId = tabId === 'tab-booking' ? 'nav-booking' : tabId === 'tab-history' ? 'nav-history' : 'nav-profile';
+      const targetNav = document.getElementById(targetNavId);
+      if (targetNav) {
+        inactiveNavClasses.forEach(cls => targetNav.classList.remove(cls));
+        activeNavClasses.forEach(cls => targetNav.classList.add(cls));
+      }
+
+      // Hide all content sections
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+
+      // Show selected content section
+      document.getElementById(tabId).classList.remove('hidden');
+
+      // Update Header Text dynamically
+      const titles = {
+        'tab-booking': 'Pesan Lapangan',
+        'tab-history': 'Riwayat Reservasi',
+        'tab-profile': 'Profil Saya'
+      };
+      const descriptions = {
+        'tab-booking': 'Selamat datang kembali di portal booking GOR Jasa Tirta II',
+        'tab-history': 'Pantau status dan detail pemesanan lapangan Anda',
+        'tab-profile': 'Keloa informasi akun dan pengaturan keamanan Anda'
+      };
+
+      document.getElementById('page-title').innerText = titles[tabId];
+      document.getElementById('page-desc').innerText = descriptions[tabId];
+
+      // Load data
+      if (tabId === 'tab-booking') {
+        loadWeeklySchedule();
+      } else if (tabId === 'tab-history') {
+        loadHistoryData();
+      } else if (tabId === 'tab-profile') {
+        loadProfileData();
+      }
+    }
+
+    // Format Rupiah
+    function formatRupiah(num) {
+      return 'Rp' + parseFloat(num).toLocaleString('id-ID');
+    }
+
+    // Helper functions
+    function formatDateIndo(dateStr) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateStr).toLocaleDateString('id-ID', options);
+    }
+
+    function addHoursToTime(timeStr, hours) {
+      const parts = timeStr.split(':');
+      const nextHour = (parseInt(parts[0], 10) + parseInt(hours, 10)) % 24;
+      return `${nextHour.toString().padStart(2, '0')}:${parts[1]}`;
+    }
+
+    // Load History Data
+    async function loadHistoryData() {
+      try {
+        const response = await fetch('/api/bookings/my', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        const tbody = document.getElementById('history-bookings-tbody');
+        tbody.innerHTML = '';
+
+        if (result.success) {
+          if (result.bookings.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium">Belum ada riwayat booking.</td></tr>';
+          } else {
+            result.bookings.forEach(b => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors";
+
+              let badgeStatusColor = "bg-gray-100 text-gray-700";
+              if (b.status.toLowerCase() === 'approved' || b.status.toLowerCase() === 'upcoming') {
+                badgeStatusColor = "bg-green-50 text-green-700 border-green-200 border";
+              } else if (b.status.toLowerCase() === 'pending') {
+                badgeStatusColor = "bg-yellow-50 text-yellow-700 border-yellow-200 border";
+              } else if (b.status.toLowerCase() === 'rejected' || b.status.toLowerCase() === 'cancelled') {
+                badgeStatusColor = "bg-red-50 text-red-700 border-red-200 border";
+              }
+
+              tr.innerHTML = `
+                <td class="px-6 py-4 font-label-md"><strong>${formatDateIndo(b.booking_date)}</strong></td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-semibold">${b.sport}</span></td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${b.duration} Jam</td>
+                <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(b.total_price)}</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${badgeStatusColor}">${b.status}</span></td>
+                <td class="px-6 py-4 text-xs text-on-surface-variant">${new Date(b.created_at).toLocaleString('id-ID')}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat riwayat booking.', 'error');
+      }
+    }
+
+    // Load Profile Settings
+    async function loadProfileData() {
+      try {
+        const response = await fetch('/api/auth/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        if (result.success) {
+          document.getElementById('profile-email').value = result.user.email;
+          document.getElementById('profile-name').value = result.user.nama;
+          document.getElementById('profile-phone').value = result.user.nomor_hp;
+          document.getElementById('profile-password').value = '';
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat profil.', 'error');
+      }
+    }
+
+    // Profile form submit
+    document.getElementById('profile-update-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById('profile-name').value;
+      const nomor_hp = document.getElementById('profile-phone').value;
+      const password = document.getElementById('profile-password').value;
+
+      try {
+        const response = await fetch('/api/auth/profile', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ nama, nomor_hp, password })
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message, 'success');
+          // Update cached user info
+          user.nama = nama;
+          user.nomor_hp = nomor_hp;
+          localStorage.setItem('user', JSON.stringify(user));
+          document.getElementById('sidebar-user-name').innerText = nama;
+          document.getElementById('profile-password').value = '';
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal menyimpan profil.', 'error');
+      }
+    });
+
+    // Weekly Calendar state
+    let currentWeekMonday = getMonday(new Date());
+    let activeDateStr = null;
+
+    function getMonday(d) {
+      d = new Date(d);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+      return new Date(d.setDate(diff));
+    }
+
+    function formatDateIndoShort(dateObj) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+    }
+
+    async function loadWeeklySchedule() {
+      const weekDates = [];
+      const daysIndo = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+      for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(currentWeekMonday);
+        dayDate.setDate(currentWeekMonday.getDate() + i);
+        weekDates.push({
+          dateStr: dayDate.toISOString().split('T')[0],
+          dayName: daysIndo[i],
+          formatted: `${dayDate.getDate().toString().padStart(2, '0')}/${(dayDate.getMonth() + 1).toString().padStart(2, '0')}`,
+          obj: dayDate
+        });
+      }
+
+      // Update week label
+      const startStr = formatDateIndoShort(weekDates[0].obj);
+      const endStr = formatDateIndoShort(weekDates[6].obj);
+      document.getElementById('week-label').innerText = `${startStr} - ${endStr}`;
+
+      // Initialize active date string
+      const localTodayStr = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0];
+      const hasActiveInWeek = weekDates.some(day => day.dateStr === activeDateStr);
+      if (!hasActiveInWeek) {
+        const futureDay = weekDates.find(day => day.dateStr >= localTodayStr);
+        if (futureDay) {
+          activeDateStr = futureDay.dateStr;
+        } else {
+          activeDateStr = weekDates[0].dateStr;
+        }
+      }
+
+      // Sync date picker with active date
+      bookingDatePicker.value = activeDateStr;
+
+      const start_date = weekDates[0].dateStr;
+      const end_date = weekDates[6].dateStr;
+
+      const slotsContainer = document.getElementById('slots-grid-container');
+      slotsContainer.innerHTML = `<div class="col-span-full py-10 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat jadwal lapangan...</div>`;
+
+      try {
+        const response = await fetch(`/api/bookings/schedule?start_date=${start_date}&end_date=${end_date}`);
+        const result = await response.json();
+
+        if (result.success) {
+          renderWeeklyGrid(weekDates, result.bookings);
+        } else {
+          slotsContainer.innerHTML = `<div class="col-span-full py-10 text-center text-red-500 font-semibold">${result.message}</div>`;
+        }
+      } catch (err) {
+        console.error(err);
+        slotsContainer.innerHTML = '<div class="col-span-full py-10 text-center text-red-500 font-semibold">Gagal memuat jadwal.</div>';
+      }
+    }
+
+    function renderWeeklyGrid(weekDates, bookings) {
+      // 1. Render Days Strip
+      const daysStrip = document.getElementById('days-strip');
+      daysStrip.innerHTML = '';
+
+      const dayNamesShort = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+      const monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+      weekDates.forEach((day, index) => {
+        const dObj = day.obj;
+        const shortDay = dayNamesShort[index];
+        const dayLabel = `${dObj.getDate()} ${monthNamesShort[dObj.getMonth()]}`;
+
+        const dayTab = document.createElement('div');
+        const isActive = day.dateStr === activeDateStr;
+
+        dayTab.className = isActive
+          ? `min-w-[80px] flex flex-col items-center justify-center py-3 border border-primary bg-primary text-white rounded-xl cursor-pointer shadow-md transform scale-[1.02] transition-all`
+          : `min-w-[80px] flex flex-col items-center justify-center py-3 border border-outline-variant bg-surface rounded-xl cursor-pointer hover:bg-surface-container-low transition-all`;
+
+        dayTab.innerHTML = `
+          <span class="text-xs uppercase tracking-wider mb-1 ${isActive ? 'text-white/80' : 'text-on-surface-variant'}">${shortDay}</span>
+          <span class="text-lg font-bold ${isActive ? 'text-white' : 'text-on-surface'}">${dayLabel}</span>
+        `;
+
+        dayTab.addEventListener('click', () => {
+          activeDateStr = day.dateStr;
+          renderWeeklyGrid(weekDates, bookings);
+          bookingDatePicker.value = activeDateStr;
+          document.getElementById('form-date').value = activeDateStr;
+        });
+
+        daysStrip.appendChild(dayTab);
+      });
+
+      // Update date picker value & form date
+      document.getElementById('form-date').value = activeDateStr;
+
+      // 2. Render Slots for Active Day
+      const slotsContainer = document.getElementById('slots-grid-container');
+      slotsContainer.innerHTML = '';
+
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const localNow = new Date(now.getTime() - (offset * 60 * 1000));
+      const todayStr = localNow.toISOString().split('T')[0];
+      const currentHour = now.getHours();
+
+      let availableCount = 0;
+
+      for (let h = 8; h < 22; h++) {
+        const hourStr = `${h.toString().padStart(2, '0')}:00`;
+        const nextHourStr = `${(h + 1).toString().padStart(2, '0')}:00`;
+        const timeRangeStr = `${hourStr} - ${nextHourStr}`;
+
+        const booking = bookings.find(b => {
+          if (b.booking_date !== activeDateStr) return false;
+          const bStart = parseInt(b.start_time.split(':')[0], 10);
+          const bEnd = parseInt(b.end_time.split(':')[0], 10);
+          return bStart <= h && bEnd > h;
+        });
+
+        let isPast = false;
+        if (activeDateStr < todayStr) {
+          isPast = true;
+        } else if (activeDateStr === todayStr && h < currentHour) {
+          isPast = true;
+        }
+
+        const card = document.createElement('div');
+
+        if (booking) {
+          card.className = 'border border-red-200 bg-red-50/50 rounded-xl p-3 flex flex-col items-center justify-center opacity-65 cursor-not-allowed';
+          card.innerHTML = `
+            <span class="text-xs text-on-surface-variant mb-1">60 Menit</span>
+            <span class="font-bold text-on-surface mb-1">${timeRangeStr}</span>
+            <span class="text-[10px] text-red-500 font-bold mt-1">Booked (${booking.sport})</span>
+          `;
+        } else if (isPast) {
+          card.className = 'border border-outline-variant/50 bg-surface-container-low/50 rounded-xl p-3 flex flex-col items-center justify-center opacity-40 cursor-not-allowed';
+          card.innerHTML = `
+            <span class="text-xs text-on-surface-variant mb-1">60 Menit</span>
+            <span class="font-bold text-on-surface mb-1">${timeRangeStr}</span>
+            <span class="text-xs text-on-surface-variant mt-1">-</span>
+          `;
+        } else {
+          availableCount++;
+          const formSelectedDate = document.getElementById('form-date').value;
+          const formSelectedTime = document.getElementById('form-start-time').value;
+          const isSelected = formSelectedDate === activeDateStr && formSelectedTime === hourStr;
+
+          card.className = isSelected
+            ? 'border-2 border-primary bg-surface-container-high shadow-md rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-all'
+            : 'border border-outline-variant rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer hover:border-primary hover:shadow-sm transition-all bg-surface-container-lowest';
+
+          card.innerHTML = `
+            <span class="text-xs text-on-surface-variant mb-1">60 Menit</span>
+            <span class="font-bold text-on-surface mb-1">${timeRangeStr}</span>
+            <div class="flex flex-col items-center mt-1">
+              <span class="text-[10px] text-on-surface-variant line-through">Rp120.000</span>
+              <span class="text-sm text-[#00a3ff] font-bold">Rp100.000</span>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            document.querySelectorAll('#slots-grid-container > div').forEach(el => {
+              el.classList.remove('border-2', 'border-primary', 'bg-surface-container-high', 'shadow-md');
+              el.classList.add('border', 'border-outline-variant', 'bg-surface-container-lowest');
+            });
+            card.classList.remove('border', 'border-outline-variant', 'bg-surface-container-lowest');
+            card.classList.add('border-2', 'border-primary', 'bg-surface-container-high', 'shadow-md');
+
+            document.getElementById('form-date').value = activeDateStr;
+            document.getElementById('form-start-time').value = hourStr;
+
+            // Highlight booking form card temporarily
+            const formCard = document.getElementById('court-booking-form').parentElement;
+            formCard.style.boxShadow = '0 0 20px rgba(0, 86, 179, 0.25)';
+            setTimeout(() => { formCard.style.boxShadow = ''; }, 1000);
+          });
+        }
+
+        slotsContainer.appendChild(card);
+      }
+
+      document.getElementById('available-slots-count').innerText = availableCount;
+    }
+
+    // Nav listeners
+    document.getElementById('btn-prev-week').addEventListener('click', () => {
+      currentWeekMonday.setDate(currentWeekMonday.getDate() - 7);
+      if (activeDateStr) {
+        const activeDate = new Date(activeDateStr);
+        activeDate.setDate(activeDate.getDate() - 7);
+        activeDateStr = new Date(activeDate.getTime() - (activeDate.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0];
+      }
+      loadWeeklySchedule();
+    });
+
+    document.getElementById('btn-next-week').addEventListener('click', () => {
+      currentWeekMonday.setDate(currentWeekMonday.getDate() + 7);
+      if (activeDateStr) {
+        const activeDate = new Date(activeDateStr);
+        activeDate.setDate(activeDate.getDate() + 7);
+        activeDateStr = new Date(activeDate.getTime() - (activeDate.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0];
+      }
+      loadWeeklySchedule();
+    });
+
+    bookingDatePicker.addEventListener('change', (e) => {
+      if (e.target.value) {
+        activeDateStr = e.target.value;
+        currentWeekMonday = getMonday(new Date(e.target.value));
+        loadWeeklySchedule();
+      }
+    });
+
+    // Update Price Calculation
+    function updatePrice() {
+      const duration = parseInt(formDuration.value, 10);
+      const rate = 100000;
+      const total = duration * rate;
+      formTotalPrice.innerText = formatRupiah(total);
+    }
+    formDuration.addEventListener('change', updatePrice);
+
+    // Form Submission
+    document.getElementById('court-booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const sport = document.getElementById('form-sport').value;
+      const booking_date = document.getElementById('form-date').value;
+      const start_time = document.getElementById('form-start-time').value;
+      const duration = document.getElementById('form-duration').value;
+
+      if (!start_time) {
+        showToast('Silakan klik salah satu jam kosong di kalender.', 'error');
+        return;
+      }
+
+      if (!sport) {
+        showToast('Silakan pilih cabang olahraga.', 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ sport, booking_date, start_time, duration })
+        });
+        const result = await response.json();
+
+        if (response.status === 201) {
+          showToast(result.message, 'success');
+          document.getElementById('form-start-time').value = '';
+          document.getElementById('form-sport').value = '';
+
+          loadWeeklySchedule();
+
+          setTimeout(() => {
+            switchTab(null, 'tab-history');
+          }, 1500);
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal mengajukan booking.', 'error');
+      }
+    });
+
+    // Initial load check for pre-selected scheduling from homepage
+    const preDate = sessionStorage.getItem('pre_booking_date');
+    const preTime = sessionStorage.getItem('pre_booking_time');
+
+    if (preDate && preTime) {
+      sessionStorage.removeItem('pre_booking_date');
+      sessionStorage.removeItem('pre_booking_time');
+
+      currentWeekMonday = getMonday(new Date(preDate));
+      activeDateStr = preDate;
+      document.getElementById('form-date').value = preDate;
+      document.getElementById('form-start-time').value = preTime;
+    } else {
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const localNow = new Date(now.getTime() - (offset * 60 * 1000));
+      activeDateStr = localNow.toISOString().split('T')[0];
+    }
+
+    // Default to booking tab on load
+    switchTab(null, 'tab-booking');
+  </script>
+</body>
+
+</html>

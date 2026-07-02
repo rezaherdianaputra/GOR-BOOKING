@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Registrasi Akun - Jasa Tirta II Sport Center</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f0f3ff",
+            "error-container": "#ffdad6",
+            "secondary-container": "#58e6ff",
+            "on-secondary-fixed": "#001f25",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#ecf1ff",
+            "on-tertiary-fixed": "#191c1e",
+            "secondary-fixed": "#a1efff",
+            "on-tertiary-container": "#b9bcbf",
+            "on-primary-fixed-variant": "#004398",
+            "on-tertiary-fixed-variant": "#44474a",
+            "primary-fixed": "#d9e2ff",
+            "on-primary-fixed": "#001a43",
+            "outline": "#737783",
+            "inverse-primary": "#afc6ff",
+            "secondary": "#006876",
+            "on-primary-container": "#9ebbff",
+            "on-background": "#111c2d",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c3c6d4",
+            "surface-dim": "#cfdaf2",
+            "primary": "#003175",
+            "tertiary-fixed": "#e0e3e6",
+            "surface": "#f9f9ff",
+            "background": "#f9f9ff",
+            "tertiary": "#323538",
+            "primary-container": "#0047a1",
+            "surface-container": "#e7eeff",
+            "surface-bright": "#f9f9ff",
+            "surface-container-highest": "#d8e3fb",
+            "inverse-surface": "#263143",
+            "error": "#ba1a1a",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#44d8f1",
+            "on-surface": "#111c2d",
+            "tertiary-fixed-dim": "#c4c7ca",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#dee8ff",
+            "on-primary": "#ffffff",
+            "surface-tint": "#265bb5",
+            "tertiary-container": "#494c4e",
+            "primary-fixed-dim": "#afc6ff",
+            "on-surface-variant": "#434752",
+            "on-secondary-fixed-variant": "#004e59",
+            "on-secondary-container": "#006573",
+            "surface-variant": "#d8e3fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "16px",
+            "container-max": "1280px",
+            "xl": "48px",
+            "md": "24px",
+            "base": "4px",
+            "xs": "8px",
+            "gutter": "24px",
+            "lg": "32px"
+          },
+          "fontFamily": {
+            "display": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+  <main
+    class="flex-grow flex items-center justify-center py-xl px-sm relative overflow-hidden bg-surface-container-lowest">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 z-0 opacity-40 pointer-events-none"
+      style="background-image: radial-gradient(circle at 10% 20%, rgb(240, 243, 255) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgb(240, 243, 255) 0%, transparent 40%);">
+    </div>
+    <div
+      class="relative z-10 w-full max-w-md bg-surface-container-lowest rounded-[24px] p-lg shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-outline-variant/30">
+      <div class="text-center mb-lg flex flex-col items-center">
+        <div class="mb-sm flex justify-center">
+          <img src="images/logo-pjt.png" alt="Jasa Tirta II Logo" class="h-16 w-auto object-contain">
+        </div>
+        <h2 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-sm">Jasa Tirta II Sport
+          Center</h2>
+        <h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Registrasi Akun</h1>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Daftar untuk mulai menyewa lapangan olahraga</p>
+      </div>
+      <form id="register-form" class="space-y-md">
+        <!-- Nama Lengkap -->
+        <div class="space-y-base">
+          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nama">Nama Lengkap</label>
+          <input
+            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+            id="nama" placeholder="Nama lengkap Anda" type="text" required>
+        </div>
+        <!-- Alamat Email -->
+        <div class="space-y-base">
+          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="email">Alamat Email</label>
+          <input
+            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+            id="email" placeholder="name@example.com" type="email" required autocomplete="email">
+        </div>
+        <!-- Nomor Handphone -->
+        <div class="space-y-base">
+          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nomor_hp">Nomor
+            Handphone</label>
+          <input
+            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+            id="nomor_hp" placeholder="08xxxxxxxxxx" type="tel" required>
+        </div>
+        <!-- Kata Sandi -->
+        <div class="space-y-base">
+          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="password">Kata Sandi</label>
+          <div class="relative">
+            <input
+              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant pr-lg"
+              id="password" placeholder="Buat kata sandi minimal 6 karakter" type="password" required minlength="6"
+              autocomplete="new-password">
+            <button
+              class="absolute right-sm top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none"
+              type="button" id="toggle-password">
+              <span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility_off</span>
+            </button>
+          </div>
+        </div>
+        <div class="pt-sm">
+          <button
+            class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs hover:bg-primary transition-all duration-150 active:scale-[0.98]"
+            type="submit">
+            <span class="material-symbols-outlined text-[20px]"
+              style="font-variation-settings: 'FILL' 1;">person_add</span>
+            Daftar
+          </button>
+        </div>
+      </form>
+      <div class="mt-lg text-center space-y-sm">
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Sudah punya akun? <a class="text-primary font-label-md hover:underline" href="login.html">Masuk sekarang</a>
+        </p>
+        <a class="inline-flex items-center gap-xs font-label-sm text-label-sm text-outline hover:text-primary transition-colors"
+          href="index.html">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Kembali ke Beranda
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div class="fixed top-5 right-5 z-50 flex flex-col gap-2" id="toast-container"></div>
+
+  <script>
+    // Redirect if already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      const userJson = localStorage.getItem('user');
+      if (userJson) {
+        const user = JSON.parse(userJson);
+        window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+      }
+    }
+
+    const form = document.getElementById('register-form');
+    const toastContainer = document.getElementById('toast-container');
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300 transform translate-y-2 opacity-0 ${type === 'success'
+          ? 'bg-green-50 text-green-800 border-green-200'
+          : 'bg-red-50 text-red-800 border-red-200'
+        }`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[20px]">${type === 'success' ? 'check_circle' : 'cancel'}</span>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+      toastContainer.appendChild(toast);
+
+      // trigger transition
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Toggle Password Visibility
+    const passwordInput = document.getElementById('password');
+    const toggleBtn = document.getElementById('toggle-password');
+    const toggleIcon = document.getElementById('password-toggle-icon');
+    if (toggleBtn && passwordInput && toggleIcon) {
+      toggleBtn.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          toggleIcon.innerText = 'visibility';
+        } else {
+          passwordInput.type = 'password';
+          toggleIcon.innerText = 'visibility_off';
+        }
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById('nama').value;
+      const email = document.getElementById('email').value;
+      const nomor_hp = document.getElementById('nomor_hp').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nama, email, nomor_hp, password })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message, 'success');
+
+          // Redirect to login
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal menghubungkan ke server.', 'error');
+      }
+    });
+  </script>
+</body>
+
+</html>

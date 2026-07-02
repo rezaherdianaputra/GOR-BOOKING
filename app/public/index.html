@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Booking GOR - Perum Jasa Tirta II</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style data-purpose="custom-styles">
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    .text-pjt-blue {
+      color: #0056b3;
+    }
+
+    .bg-pjt-blue {
+      background-color: #0056b3;
+    }
+
+    .border-pjt-blue {
+      border-color: #0056b3;
+    }
+
+    .hero-curve {
+      clip-path: ellipse(120% 100% at 50% 0%);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50" data-mode="connect">
+
+  <!-- BEGIN: MainHeader -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <img alt="Logo Perum Jasa Tirta II" class="h-20 md:h-24 object-contain" src="images/logo-pjt2.png">
+      </div>
+      <!-- Navigation -->
+      <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
+        <a class="text-pjt-blue border-b-2 border-pjt-blue pb-1" href="#">BERANDA</a>
+        <a class="hover:text-pjt-blue transition" href="#tentang-kami">TENTANG KAMI</a>
+        <a class="hover:text-pjt-blue transition" href="#fasilitas">FASILITAS</a>
+        <a class="hover:text-pjt-blue transition" href="#harga">HARGA</a>
+        <a class="hover:text-pjt-blue transition" href="#kontak">KONTAK</a>
+      </nav>
+      <!-- CTA Button -->
+      <div class="hidden md:block" id="auth-buttons">
+        <a class="bg-pjt-blue text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition"
+          href="login.html">LOGIN / DAFTAR</a>
+      </div>
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-gray-600 focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+  </header>
+  <!-- END: MainHeader -->
+
+  <main>
+    <!-- BEGIN: Hero Section -->
+    <section class="relative bg-white pt-16 pb-32 overflow-hidden">
+      <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pr-12 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4 text-gray-900">
+            Booking GOR <br>
+            <span class="text-pjt-blue">Mudah, Cepat,</span> Terpercaya
+          </h1>
+          <p class="text-gray-600 mb-8 text-lg">
+            Pesan lapangan futsal, badminton, basket, dan voli kapan saja, di mana saja.
+          </p>
+          <div class="flex space-x-4">
+            <a id="cta-button"
+              class="bg-pjt-blue text-white px-8 py-3 rounded-md font-medium hover:bg-blue-700 transition shadow-lg shadow-blue-500/30"
+              href="login.html">BOOKING SEKARANG</a>
+            <a class="border-2 border-pjt-blue text-pjt-blue px-8 py-3 rounded-md font-medium hover:bg-blue-50 transition"
+              href="#cek-jadwal">LIHAT JADWAL</a>
+          </div>
+        </div>
+        <!-- Hero Image -->
+        <div class="md:w-1/2 relative">
+          <img alt="Indoor Sports Hall" class="rounded-l-full shadow-2xl object-cover h-[400px] w-full"
+            src="images/gor1.jpeg">
+        </div>
+      </div>
+      <!-- Background Curve -->
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-50 -z-10 hero-curve"></div>
+    </section>
+    <!-- END: Hero Section -->
+
+    <!-- BEGIN: Features Section -->
+    <section class="py-12 bg-gray-50 -mt-20 relative z-20">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Feature Card 1 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div
+              class="w-12 h-12 bg-blue-100 text-pjt-blue rounded-full flex items-center justify-center mb-4 text-2xl">
+              <i class="far fa-calendar-check"></i>
+            </div>
+            <h3 class="font-semibold text-lg mb-2 text-gray-900">Mudah</h3>
+            <p class="text-sm text-gray-500">Pilih jadwal dan lapangan dengan mudah secara online.</p>
+          </div>
+          <!-- Feature Card 2 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div
+              class="w-12 h-12 bg-blue-100 text-pjt-blue rounded-full flex items-center justify-center mb-4 text-2xl">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="font-semibold text-lg mb-2 text-gray-900">Terpercaya</h3>
+            <p class="text-sm text-gray-500">Sistem aman dan data terjamin kerahasiaannya.</p>
+          </div>
+          <!-- Feature Card 3 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div
+              class="w-12 h-12 bg-blue-100 text-pjt-blue rounded-full flex items-center justify-center mb-4 text-2xl">
+              <i class="far fa-clock"></i>
+            </div>
+            <h3 class="font-semibold text-lg mb-2 text-gray-900">24/7</h3>
+            <p class="text-sm text-gray-500">Booking kapan saja, di mana saja.</p>
+          </div>
+          <!-- Feature Card 4 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div
+              class="w-12 h-12 bg-blue-100 text-pjt-blue rounded-full flex items-center justify-center mb-4 text-2xl">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3 class="font-semibold text-lg mb-2 text-gray-900">Layanan Prima</h3>
+            <p class="text-sm text-gray-500">Kami siap membantu kebutuhan Anda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: Features Section -->
+
+    <!-- BEGIN: Availability & About Section -->
+    <section class="py-16 bg-white" id="tentang-kami">
+      <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Availability Checker -->
+        <div class="bg-blue-50 p-8 rounded-2xl border border-blue-100" id="cek-jadwal">
+          <h2 class="text-2xl font-bold mb-6 text-gray-900">Cek Jadwal &amp; Ketersediaan</h2>
+          <form class="space-y-4" onsubmit="event.preventDefault(); redirectToCheckSchedule();">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Tanggal</label>
+              <div class="relative">
+                <input
+                  class="w-full border-gray-300 rounded-md shadow-sm focus:ring-pjt-blue focus:border-pjt-blue p-3 pl-4"
+                  type="date" id="check-date" required>
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4 items-end">
+              <div class="flex-grow">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Olahraga</label>
+                <select
+                  class="w-full border-gray-300 rounded-md shadow-sm focus:ring-pjt-blue focus:border-pjt-blue p-3"
+                  id="check-sport">
+                  <option value="">Pilih olahraga</option>
+                  <option value="Futsal">Futsal</option>
+                  <option value="Badminton">Badminton</option>
+                  <option value="Basket">Basket</option>
+                </select>
+              </div>
+              <button
+                class="bg-pjt-blue text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition w-full md:w-auto"
+                type="submit">CEK JADWAL</button>
+            </div>
+            <p class="text-xs text-gray-500 mt-4">Temukan jadwal lapangan yang tersedia dengan cepat dan praktis.</p>
+          </form>
+        </div>
+        <!-- About Us -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-gray-900">Tentang GOR Kami</h2>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            GOR Perum Jasa Tirta II merupakan fasilitas olahraga yang dikelola secara profesional untuk mendukung gaya
+            hidup sehat dan aktif. <br>
+            Kami menyediakan lapangan berkualitas dengan fasilitas lengkap dan pelayanan terbaik untuk Anda.
+          </p>
+          <a class="inline-block border-2 border-pjt-blue text-pjt-blue px-6 py-2 rounded-md font-medium hover:bg-blue-50 transition mb-6"
+            href="#">SELENGKAPNYA</a>
+          <img alt="Building of GOR PJT II" class="rounded-xl shadow-md object-cover w-full h-48"
+            src="images/info.jpeg">
+        </div>
+      </div>
+    </section>
+    <!-- END: Availability & About Section -->
+
+    <!-- BEGIN: Facilities Section -->
+    <section class="py-16 bg-gray-50" id="fasilitas">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-2xl font-bold mb-12 text-gray-900">Fasilitas GOR</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Lapangan Berkualitas" class="w-full h-full object-cover" src="images/facilities-court.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Lapangan</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Loker" class="w-full h-full object-cover" src="images/facilities-locker.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Loker</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Toilet &amp; Shower" class="w-full h-full object-cover" src="images/facilities-shower.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Toilet &amp; Shower</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Parkir Luas" class="w-full h-full object-cover" src="images/facilities-parking.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Parkir Luas</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Mushola" class="w-full h-full object-cover" src="images/facilities-mosque.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Masjid</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full border border-gray-200 overflow-hidden mb-3 bg-white shadow-sm">
+              <img alt="Kantin" class="w-full h-full object-cover" src="images/facilities-canteen.png">
+            </div>
+            <span class="text-sm font-medium text-gray-700">Kantin</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: Facilities Section -->
+
+    <!-- BEGIN: Pricing & Booking Steps -->
+    <section class="py-16 bg-white" id="harga">
+      <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+        <!-- Pricing Card -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-lg p-8 text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-2 bg-pjt-blue"></div>
+          <h3 class="text-lg font-medium text-pjt-blue mb-2">Semua Jenis Olahraga</h3>
+          <div class="text-4xl font-bold text-gray-900 mb-1">Rp 100.000</div>
+          <div class="text-gray-500 mb-6">/ jam</div>
+          <ul class="text-sm text-gray-600 space-y-3 text-left">
+            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Minimal pemesanan 1 jam</li>
+            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Maksimal pemesanan 4 jam</li>
+            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Sudah termasuk fasilitas
+              standar</li>
+          </ul>
+        </div>
+        <!-- Booking Steps -->
+        <div class="lg:col-span-2">
+          <h2 class="text-2xl font-bold mb-10 text-center text-gray-900">Cara Booking</h2>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center relative">
+            <!-- Connecting Line -->
+            <div class="hidden md:block absolute top-6 left-[10%] right-[10%] h-0.5 bg-gray-200 -z-10"></div>
+            <div class="relative z-10">
+              <div
+                class="w-12 h-12 bg-pjt-blue text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-md">
+                1</div>
+              <h4 class="font-semibold text-gray-900 mb-2">Pilih Jadwal</h4>
+              <p class="text-sm text-gray-500">Pilih tanggal, jam, dan jenis olahraga.</p>
+            </div>
+            <div class="relative z-10">
+              <div
+                class="w-12 h-12 bg-pjt-blue text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-md">
+                2</div>
+              <h4 class="font-semibold text-gray-900 mb-2">Lakukan Pembayaran</h4>
+              <p class="text-sm text-gray-500">Lakukan pembayaran sesuai instruksi.</p>
+            </div>
+            <div class="relative z-10">
+              <div
+                class="w-12 h-12 bg-pjt-blue text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-md">
+                3</div>
+              <h4 class="font-semibold text-gray-900 mb-2">Tunggu Konfirmasi</h4>
+              <p class="text-sm text-gray-500">Booking akan dikonfirmasi secara otomatis.</p>
+            </div>
+            <div class="relative z-10">
+              <div
+                class="w-12 h-12 bg-pjt-blue text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-md">
+                4</div>
+              <h4 class="font-semibold text-gray-900 mb-2">Datang &amp; Bermain</h4>
+              <p class="text-sm text-gray-500">Datang tepat waktu dan nikmati permainan!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: Pricing & Booking Steps -->
+  </main>
+
+  <!-- BEGIN: Footer -->
+  <footer id="kontak" class="bg-pjt-blue text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <!-- Brand -->
+        <div class="md:col-span-1">
+          <img alt="Logo Perum Jasa Tirta II" src="images/logo-pjt2.png">
+          <p class="text-blue-200 text-sm leading-relaxed">
+            Bersama kita menjaga sumber daya air untuk kehidupan yang lebih baik.
+          </p>
+        </div>
+        <!-- Links -->
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Tautan Cepat</h4>
+          <ul class="space-y-2 text-sm text-blue-200">
+            <li class=""><a class="hover:text-white transition" href="#">Beranda</a></li>
+            <li class=""><a class="hover:text-white transition" href="#tentang-kami">Tentang Kami</a></li>
+            <li class=""><a class="hover:text-white transition" href="#fasilitas">Fasilitas</a></li>
+            <li class=""><a class="hover:text-white transition" href="#harga">Harga</a></li>
+            <li class=""><a class="hover:text-white transition" href="#kontak">Kontak</a></li>
+          </ul>
+        </div>
+        <!-- Info -->
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Informasi</h4>
+          <ul class="space-y-2 text-sm text-blue-200">
+            <li class=""><a class="hover:text-white transition" href="#">FAQ</a></li>
+            <li class=""><a class="hover:text-white transition" href="#">Syarat &amp; Ketentuan</a></li>
+            <li class=""><a class="hover:text-white transition" href="#">Kebijakan Privasi</a></li>
+          </ul>
+        </div>
+        <!-- Contact -->
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Kontak Kami</h4>
+          <ul class="space-y-3 text-sm text-blue-200">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 w-4 text-center"></i>
+              <span class="">Jl. Lurah Kawi No. 1 Jatiluhur, Kab. Purwakarta, Jawa Barat</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone-alt mr-3 w-4 text-center"></i>
+              <span class="">(0341) 551 555</span>
+            </li>
+            <li class="flex items-center">
+              <i class="far fa-envelope mr-3 w-4 text-center"></i>
+              <span class="">info@jasatirta2.co.id</span>
+            </li>
+          </ul>
+          <div class="mt-6 flex space-x-4">
+            <a class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition"
+              href="#"><i class="fab fa-instagram"></i></a>
+            <a class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition"
+              href="#"><i class="fab fa-facebook-f"></i></a>
+            <a class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition"
+              href="#"><i class="fab fa-youtube"></i></a>
+            <a class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition"
+              href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-blue-800 pt-8 text-center text-xs text-blue-300">
+        <p class="">© 2024 Perum Jasa Tirta II. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- END: Footer -->
+
+  <script>
+    // Check token and adjust buttons
+    const token = localStorage.getItem('token');
+    const userJson = localStorage.getItem('user');
+    if (token && userJson) {
+      const user = JSON.parse(userJson);
+      const dashboardPage = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+
+      // Replace the desktop auth buttons container contents
+      const authButtonsContainer = document.getElementById('auth-buttons');
+      if (authButtonsContainer) {
+        authButtonsContainer.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <span class="text-sm text-gray-700">Halo, <strong class="font-semibold">${user.nama}</strong></span>
+            <a href="${dashboardPage}" class="bg-pjt-blue text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition shadow-sm">Dashboard</a>
+            <button onclick="logout()" class="border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Keluar</button>
+          </div>
+        `;
+      }
+
+      const ctaButton = document.getElementById('cta-button');
+      if (ctaButton) {
+        ctaButton.innerText = 'CEK JADWAL';
+        ctaButton.setAttribute('href', dashboardPage);
+      }
+    }
+
+    function redirectToCheckSchedule() {
+      const token = localStorage.getItem('token');
+      const userJson = localStorage.getItem('user');
+
+      const checkDate = document.getElementById('check-date')?.value;
+      if (checkDate) {
+        sessionStorage.setItem('pre_booking_date', checkDate);
+      }
+
+      if (token && userJson) {
+        const user = JSON.parse(userJson);
+        window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.reload();
+    }
+  </script>
+</body>
+
+</html>
