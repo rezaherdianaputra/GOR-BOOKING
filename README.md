@@ -100,14 +100,3 @@ Pastikan Anda sudah menginstal **Docker** dan **Docker Compose** di komputer And
    **[http://localhost:3000](http://localhost:3000)**
 
 ---
-
-## Akun Pengguna Bawaan (Default Seeding)
-
-Saat aplikasi pertama kali dijalankan, sistem akan otomatis melakukan *seeding* akun administrator ke dalam database:
-
-* **Akun Administrator**:
-  * Email: `admin@gor.com`
-  * Sandi: `admin123`
-  * Peran: `admin`
-
-Untuk masuk sebagai **Customer (Pelanggan)**, Anda dapat mendaftar secara mandiri melalui tombol **Daftar Akun** di pojok kanan atas halaman beranda.
