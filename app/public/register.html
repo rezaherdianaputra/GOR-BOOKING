@@ -122,72 +122,139 @@
     </div>
     <div
       class="relative z-10 w-full max-w-md bg-surface-container-lowest rounded-[24px] p-lg shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-outline-variant/30">
-      <div class="text-center mb-lg flex flex-col items-center">
-        <div class="mb-sm flex justify-center">
-          <img src="images/logo-pjt.png" alt="Jasa Tirta II Logo" class="h-16 w-auto object-contain">
+      
+      <!-- Registration Form Step -->
+      <div id="register-step">
+        <div class="text-center mb-lg flex flex-col items-center">
+          <div class="mb-sm flex justify-center">
+            <img src="images/logo-pjt.png" alt="Jasa Tirta II Logo" class="h-16 w-auto object-contain">
+          </div>
+          <h2 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-sm">Jasa Tirta II Sport
+            Center</h2>
+          <h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Registrasi Akun</h1>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">Daftar untuk mulai menyewa lapangan olahraga</p>
         </div>
-        <h2 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-sm">Jasa Tirta II Sport
-          Center</h2>
-        <h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Registrasi Akun</h1>
-        <p class="font-body-sm text-body-sm text-on-surface-variant">Daftar untuk mulai menyewa lapangan olahraga</p>
-      </div>
-      <form id="register-form" class="space-y-md">
-        <!-- Nama Lengkap -->
-        <div class="space-y-base">
-          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nama">Nama Lengkap</label>
-          <input
-            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
-            id="nama" placeholder="Nama lengkap Anda" type="text" required>
-        </div>
-        <!-- Alamat Email -->
-        <div class="space-y-base">
-          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="email">Alamat Email</label>
-          <input
-            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
-            id="email" placeholder="name@example.com" type="email" required autocomplete="email">
-        </div>
-        <!-- Nomor Handphone -->
-        <div class="space-y-base">
-          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nomor_hp">Nomor
-            Handphone</label>
-          <input
-            class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
-            id="nomor_hp" placeholder="08xxxxxxxxxx" type="tel" required>
-        </div>
-        <!-- Kata Sandi -->
-        <div class="space-y-base">
-          <label class="font-label-sm text-label-sm text-on-surface-variant block" for="password">Kata Sandi</label>
-          <div class="relative">
+        <form id="register-form" class="space-y-md">
+          <!-- Nama Lengkap -->
+          <div class="space-y-base">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nama">Nama Lengkap</label>
             <input
-              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant pr-lg"
-              id="password" placeholder="Buat kata sandi minimal 6 karakter" type="password" required minlength="6"
-              autocomplete="new-password">
+              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+              id="nama" placeholder="Nama lengkap Anda" type="text" required>
+          </div>
+          <!-- Alamat Email -->
+          <div class="space-y-base">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="email">Alamat Email</label>
+            <input
+              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+              id="email" placeholder="name@example.com" type="email" required autocomplete="email">
+          </div>
+          <!-- Nomor Handphone -->
+          <div class="space-y-base">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nomor_hp">Nomor
+              Handphone</label>
+            <input
+              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+              id="nomor_hp" placeholder="08xxxxxxxxxx" type="tel" required
+              pattern="[0-9]+" title="Nomor handphone hanya boleh berisi angka"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          </div>
+          <!-- Kata Sandi -->
+          <div class="space-y-base">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="password">Kata Sandi</label>
+            <div class="relative">
+              <input
+                class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant pr-lg"
+                id="password" placeholder="Buat kata sandi minimal 6 karakter" type="password" required minlength="6"
+                autocomplete="new-password">
+              <button
+                class="absolute right-sm top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none"
+                type="button" id="toggle-password">
+                <span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility_off</span>
+              </button>
+            </div>
+          </div>
+          <!-- Checkbox Karyawan -->
+          <div class="flex items-center gap-xs py-1">
+            <input
+              id="is_karyawan"
+              type="checkbox"
+              class="w-4 h-4 text-primary bg-surface border-transparent rounded focus:ring-primary focus:ring-2 focus:ring-offset-2 transition-all cursor-pointer"
+            />
+            <label for="is_karyawan" class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer select-none">
+              Saya adalah Karyawan
+            </label>
+          </div>
+          <!-- Input NIK Karyawan (Hidden by default) -->
+          <div id="nik-container" class="space-y-base hidden transition-all duration-200">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="nik_karyawan">NIK Karyawan</label>
+            <input
+              class="w-full bg-surface text-on-surface font-body-sm text-body-sm border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant"
+              id="nik_karyawan" placeholder="Masukkan NIK karyawan Anda" type="text">
+          </div>
+          <div class="pt-sm">
             <button
-              class="absolute right-sm top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none"
-              type="button" id="toggle-password">
-              <span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility_off</span>
+              class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs hover:bg-primary transition-all duration-150 active:scale-[0.98]"
+              type="submit">
+              <span class="material-symbols-outlined text-[20px]"
+                style="font-variation-settings: 'FILL' 1;">person_add</span>
+              Daftar
             </button>
           </div>
+        </form>
+        <div class="mt-lg text-center space-y-sm">
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            Sudah punya akun? <a class="text-primary font-label-md hover:underline" href="login.html">Masuk sekarang</a>
+          </p>
+          <a class="inline-flex items-center gap-xs font-label-sm text-label-sm text-outline hover:text-primary transition-colors"
+            href="index.html">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Kembali ke Beranda
+          </a>
         </div>
-        <div class="pt-sm">
-          <button
-            class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs hover:bg-primary transition-all duration-150 active:scale-[0.98]"
-            type="submit">
-            <span class="material-symbols-outlined text-[20px]"
-              style="font-variation-settings: 'FILL' 1;">person_add</span>
-            Daftar
+      </div>
+
+      <!-- OTP Verification Step -->
+      <div id="otp-step" class="hidden w-full flex flex-col gap-md">
+        <div class="text-center mb-md flex flex-col items-center">
+          <div class="mb-sm flex justify-center">
+            <img src="images/logo-pjt.png" alt="Jasa Tirta II Logo" class="h-16 w-auto object-contain">
+          </div>
+          <h2 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-sm">Jasa Tirta II Sport Center</h2>
+          <h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Verifikasi OTP</h1>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">Kami telah mengirimkan kode OTP ke email <strong id="otp-email-display" class="text-primary-container font-semibold"></strong>. Silakan periksa kotak masuk atau spam email Anda.</p>
+        </div>
+        <form id="otp-form" class="space-y-md">
+          <!-- OTP Input Field -->
+          <div class="space-y-base">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block" for="otp-code">Kode OTP (6 Digit)</label>
+            <div class="relative">
+              <input
+                class="w-full bg-surface text-on-surface font-bold text-lg text-center tracking-[0.5em] border-transparent focus:border-primary focus:ring-0 rounded-lg px-sm py-[12px] transition-colors placeholder-outline-variant h-[48px] outline-none"
+                id="otp-code" placeholder="------" type="text" required maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code">
+            </div>
+          </div>
+          
+          <div class="pt-sm">
+            <button
+              class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs hover:bg-primary transition-all duration-150 active:scale-[0.98]"
+              type="submit">
+              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+              Verifikasi & Aktivasi
+            </button>
+          </div>
+        </form>
+        
+        <div class="mt-lg text-center space-y-sm">
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            Tidak menerima kode? <button type="button" id="btn-resend-otp" class="text-primary font-label-md hover:underline disabled:text-outline disabled:no-underline focus:outline-none" disabled>Kirim Ulang (<span id="resend-countdown">60</span>s)</button>
+          </p>
+          <div class="w-full h-px bg-outline-variant/30 my-xs"></div>
+          <button type="button" id="btn-back-to-register" class="inline-flex items-center gap-xs font-label-sm text-label-sm text-outline hover:text-primary transition-colors focus:outline-none w-full justify-center">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Kembali ke Formulir
           </button>
         </div>
-      </form>
-      <div class="mt-lg text-center space-y-sm">
-        <p class="font-body-sm text-body-sm text-on-surface-variant">
-          Sudah punya akun? <a class="text-primary font-label-md hover:underline" href="login.html">Masuk sekarang</a>
-        </p>
-        <a class="inline-flex items-center gap-xs font-label-sm text-label-sm text-outline hover:text-primary transition-colors"
-          href="index.html">
-          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-          Kembali ke Beranda
-        </a>
       </div>
     </div>
   </main>
@@ -248,6 +315,43 @@
       });
     }
 
+    let countdownInterval;
+    function startResendCountdown() {
+      const btnResend = document.getElementById('btn-resend-otp');
+      const lblCountdown = document.getElementById('resend-countdown');
+      btnResend.disabled = true;
+      let timeLeft = 60;
+      lblCountdown.innerText = timeLeft;
+
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        lblCountdown.innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          btnResend.disabled = false;
+        }
+      }, 1000);
+    }
+
+    // Toggle Employee NIK visibility & requirement
+    const isKaryawanCheckbox = document.getElementById('is_karyawan');
+    const nikContainer = document.getElementById('nik-container');
+    const nikInput = document.getElementById('nik_karyawan');
+
+    if (isKaryawanCheckbox && nikContainer && nikInput) {
+      isKaryawanCheckbox.addEventListener('change', () => {
+        if (isKaryawanCheckbox.checked) {
+          nikContainer.classList.remove('hidden');
+          nikInput.required = true;
+        } else {
+          nikContainer.classList.add('hidden');
+          nikInput.required = false;
+          nikInput.value = '';
+        }
+      });
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -255,6 +359,13 @@
       const email = document.getElementById('email').value;
       const nomor_hp = document.getElementById('nomor_hp').value;
       const password = document.getElementById('password').value;
+      const is_karyawan = isKaryawanCheckbox.checked;
+      const nik_karyawan = is_karyawan ? nikInput.value : null;
+
+      if (!/^\d+$/.test(nomor_hp)) {
+        showToast('Nomor handphone hanya boleh berisi angka.', 'error');
+        return;
+      }
 
       try {
         const response = await fetch('/api/auth/register', {
@@ -262,15 +373,24 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ nama, email, nomor_hp, password })
+          body: JSON.stringify({ nama, email, nomor_hp, password, is_karyawan, nik_karyawan })
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        if (result.success && result.otp_required) {
           showToast(result.message, 'success');
-
-          // Redirect to login
+          
+          // Switch to OTP step
+          document.getElementById('register-step').classList.add('hidden');
+          document.getElementById('otp-step').classList.remove('hidden');
+          document.getElementById('otp-email-display').innerText = result.email;
+          document.getElementById('otp-code').value = '';
+          
+          // Start resend countdown
+          startResendCountdown();
+        } else if (result.success) {
+          showToast(result.message, 'success');
           setTimeout(() => {
             window.location.href = 'login.html';
           }, 1500);
@@ -281,6 +401,73 @@
         console.error(err);
         showToast('Gagal menghubungkan ke server.', 'error');
       }
+    });
+
+    // OTP Verification Submit Handler
+    const otpForm = document.getElementById('otp-form');
+    otpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const otp = document.getElementById('otp-code').value;
+
+      try {
+        const response = await fetch('/api/auth/verify-register-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, otp })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message, 'success');
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal menghubungkan ke server.', 'error');
+      }
+    });
+
+    // OTP Resend Handler
+    const btnResendOtp = document.getElementById('btn-resend-otp');
+    btnResendOtp.addEventListener('click', async () => {
+      const email = document.getElementById('email').value;
+      try {
+        const response = await fetch('/api/auth/resend-register-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message, 'success');
+          startResendCountdown();
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal menghubungkan ke server.', 'error');
+      }
+    });
+
+    // Back to registration form button handler
+    const btnBackToRegister = document.getElementById('btn-back-to-register');
+    btnBackToRegister.addEventListener('click', () => {
+      clearInterval(countdownInterval);
+      document.getElementById('otp-step').classList.add('hidden');
+      document.getElementById('register-step').classList.remove('hidden');
     });
   </script>
 </body>

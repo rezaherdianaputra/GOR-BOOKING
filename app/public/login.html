@@ -157,6 +157,25 @@
               id="password" placeholder="Masukkan kata sandi" type="password" required autocomplete="current-password">
           </div>
         </div>
+        <!-- Captcha Field -->
+        <div class="flex flex-col gap-base" id="captcha-container">
+          <label class="font-label-md text-label-md text-on-surface-variant" for="captcha">Kode Verifikasi (Captcha)</label>
+          <div class="flex gap-xs items-center">
+            <div id="captcha-svg-wrapper" class="flex-grow h-[48px] overflow-hidden">
+              <!-- Captcha SVG will be loaded here -->
+            </div>
+            <button type="button" id="btn-refresh-captcha" class="bg-surface-container-low hover:bg-surface-container-high text-primary border border-outline-variant/30 rounded-lg p-xs flex items-center justify-center h-[48px] w-[48px] transition-colors" title="Segarkan Captcha">
+              <span class="material-symbols-outlined">refresh</span>
+            </button>
+          </div>
+          <div class="relative mt-base">
+            <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">shield</span>
+            <input
+              class="w-full bg-surface-container-low border border-transparent focus:border-primary focus:ring-1 focus:ring-primary rounded-lg py-sm pl-[48px] pr-sm font-body-md text-body-md text-on-surface placeholder-outline-variant transition-colors outline-none h-[48px]"
+              id="captcha" placeholder="Masukkan kode captcha" type="text" required autocomplete="off">
+          </div>
+          <input type="hidden" id="captcha-id">
+        </div>
         <!-- Submit Button -->
         <button
           class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-primary active:scale-[0.98] transition-all flex items-center justify-center gap-xs mt-sm shadow-sm h-[48px]"
@@ -194,6 +213,29 @@
 
     const form = document.getElementById('login-form');
     const toastContainer = document.getElementById('toast-container');
+    const btnRefreshCaptcha = document.getElementById('btn-refresh-captcha');
+
+    async function loadCaptcha() {
+      try {
+        const response = await fetch('/api/auth/captcha');
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('captcha-svg-wrapper').innerHTML = data.svg;
+          document.getElementById('captcha-id').value = data.id;
+          document.getElementById('captcha').value = '';
+        } else {
+          showToast('Gagal memuat captcha.', 'error');
+        }
+      } catch (err) {
+        console.error('Error loading captcha:', err);
+        showToast('Gagal menghubungkan ke server untuk memuat captcha.', 'error');
+      }
+    }
+
+    // Load captcha on page load
+    loadCaptcha();
+
+    btnRefreshCaptcha.addEventListener('click', loadCaptcha);
 
     function showToast(message, type = 'success') {
       const toast = document.createElement('div');
@@ -223,6 +265,8 @@
 
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      const captcha_id = document.getElementById('captcha-id').value;
+      const captcha_answer = document.getElementById('captcha').value;
 
       try {
         const response = await fetch('/api/auth/login', {
@@ -230,7 +274,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email, password, captcha_id, captcha_answer })
         });
 
         const result = await response.json();
@@ -252,10 +296,13 @@
           }, 1000);
         } else {
           showToast(result.message, 'error');
+          // Refresh captcha on failure
+          loadCaptcha();
         }
       } catch (err) {
         console.error(err);
         showToast('Gagal menghubungkan ke server.', 'error');
+        loadCaptcha();
       }
     });
   </script>

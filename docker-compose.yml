@@ -10,13 +10,14 @@ services:
       MYSQL_DATABASE: gor_booking
       MYSQL_USER: gor_user
       MYSQL_PASSWORD: gor_password
+      TZ: Asia/Jakarta
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword" ]
       interval: 5s
       timeout: 3s
       retries: 10
@@ -36,6 +37,7 @@ services:
       - DB_PORT=3306
       - JWT_SECRET=supersecretkey12345
       - GOR_PRICE_PER_HOUR=100000
+      - TZ=Asia/Jakarta
     depends_on:
       db:
         condition: service_healthy

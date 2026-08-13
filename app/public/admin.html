@@ -140,18 +140,27 @@
 
 <body class="bg-surface-bright text-on-surface font-body-md antialiased flex h-screen overflow-hidden">
 
+  <!-- Sidebar Backdrop for mobile -->
+  <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity duration-300 opacity-0"></div>
+
   <!-- SideNavBar -->
-  <nav
-    class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col h-screen py-md px-sm z-50">
+  <nav id="sidebar"
+    class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col h-screen py-md px-sm z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
     <!-- Brand Header -->
-    <div class="mb-xl flex items-center px-4">
-      <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
-        <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+    <div class="mb-xl flex items-center justify-between px-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
+          <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
+          <p class="font-label-sm text-label-sm text-on-surface-variant">Admin</p>
+        </div>
       </div>
-      <div>
-        <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
-        <p class="font-label-sm text-label-sm text-on-surface-variant">Admin</p>
-      </div>
+      <!-- Close Button for Mobile -->
+      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:bg-surface-container rounded-full text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
     </div>
     <!-- Navigation Links -->
     <div class="flex flex-col gap-base flex-1" id="sidebar-nav">
@@ -169,6 +178,14 @@
         <span class="material-symbols-outlined">event_note</span>
         <span class="font-label-md text-label-md">Kelola Booking</span>
       </a>
+      <!-- Inactive Tab: Verifikasi Pembayaran -->
+      <a id="nav-payments"
+        class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all text-on-surface-variant hover:bg-surface-container transition-all cursor-pointer relative"
+        onclick="switchTab(event, 'tab-payments')">
+        <span class="material-symbols-outlined">payments</span>
+        <span class="font-label-md text-label-md">Verifikasi Pembayaran</span>
+        <span id="pending-payments-badge" class="absolute right-4 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+      </a>
       <!-- Inactive Tab: Database Pengguna -->
       <a id="nav-users"
         class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all text-on-surface-variant hover:bg-surface-container transition-all cursor-pointer"
@@ -176,6 +193,14 @@
         <span class="material-symbols-outlined">group</span>
         <span class="font-label-md text-label-md">Data Pengguna</span>
       </a>
+      <!-- Inactive Tab: Laporan Bulanan -->
+      <a id="nav-reports"
+        class="flex items-center gap-sm px-sm py-xs rounded-lg transition-all text-on-surface-variant hover:bg-surface-container transition-all cursor-pointer"
+        onclick="switchTab(event, 'tab-reports')">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="font-label-md text-label-md">Laporan Bulanan</span>
+      </a>
+
       <!-- Bottom User Profile & Logout -->
       <div class="mt-auto pt-4 border-t border-outline-variant/30 flex flex-col gap-sm">
         <div class="flex items-center gap-xs px-sm mb-2">
@@ -197,8 +222,21 @@
   </nav>
 
   <!-- Main Content Canvas -->
-  <main class="flex-1 ml-64 h-full overflow-y-auto bg-surface-container-low">
-    <div class="max-w-[1400px] mx-auto p-lg pt-xl">
+  <main class="flex-1 lg:ml-64 h-full overflow-y-auto bg-surface-container-low">
+    <!-- Mobile Header -->
+    <div class="lg:hidden flex items-center justify-between bg-surface px-md py-xs border-b border-outline-variant dark:border-outline sticky top-0 z-40 shadow-sm">
+      <div class="flex items-center gap-xs">
+        <button onclick="toggleSidebar()" class="p-xs hover:bg-surface-container rounded-lg flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-[28px]">menu</span>
+        </button>
+        <div class="w-8 h-8 overflow-hidden flex items-center justify-center">
+          <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+        </div>
+        <span class="font-display font-bold text-primary text-base">Jasa Tirta II</span>
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto p-md lg:p-lg pt-md lg:pt-xl">
       <!-- Page Header -->
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm mb-lg">
         <div>
@@ -295,74 +333,270 @@
             </table>
           </div>
         </div>
-
-        <!-- Add Booking Button -->
-        <div class="mt-lg flex justify-end mt-6">
-          <button onclick="switchTab(null, 'tab-manage')"
-            class="bg-primary text-on-primary hover:bg-primary/90 px-6 py-2.5 rounded-lg font-label-md text-label-md transition-colors shadow-sm flex items-center gap-xs"
-            style="background-color: #0047a1;">
-            <span class="material-symbols-outlined text-[20px]">add</span>
-            Buat Booking Baru
-          </button>
-        </div>
       </section>
 
       <!-- Tab: Manage Bookings -->
-      <section id="tab-manage" class="tab-content hidden space-y-6">
-        <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
-          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
-            <h2 class="text-lg font-bold text-primary">Daftar Seluruh Reservasi GOR</h2>
-            <div class="flex items-center gap-2 text-sm">
-              <label for="filter-date" class="text-on-surface-variant">Filter Tanggal:</label>
-              <input type="date" id="filter-date"
-                class="border border-outline-variant rounded px-3 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary" />
-              <button onclick="clearDateFilter()"
-                class="px-4 py-1.5 border border-outline-variant rounded hover:bg-surface-container transition-colors text-sm font-medium">Reset</button>
+        <section id="tab-manage" class="tab-content hidden space-y-6">
+          <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+            <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+              <h2 class="text-lg font-bold text-primary">Daftar Seluruh Reservasi GOR</h2>
+              <div class="flex items-center gap-2 text-sm">
+                <label for="filter-date" class="text-on-surface-variant">Filter Tanggal:</label>
+                <input type="date" id="filter-date"
+                  class="border border-outline-variant rounded px-3 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary" />
+                <button onclick="clearDateFilter()"
+                  class="px-4 py-1.5 border border-outline-variant rounded hover:bg-surface-container transition-colors text-sm font-medium">Reset</button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+              <table class="w-full text-left border-collapse min-w-[1000px]">
+                <thead class="bg-surface-container-low border-b border-outline-variant">
+                  <tr class="text-on-surface-variant font-label-md text-sm">
+                    <th class="px-6 py-4">Nama Pelanggan</th>
+                    <th class="px-6 py-4">Tanggal</th>
+                    <th class="px-6 py-4">Cabang Olahraga</th>
+                    <th class="px-6 py-4">Jam &amp; Durasi</th>
+                    <th class="px-6 py-4">Total Biaya</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/50" id="all-bookings-tbody">
+                  <!-- Rendered dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div id="admin-bookings-pagination"></div>
+          </div>
+        </section>
+
+        <!-- Tab: Payment Verification -->
+        <section id="tab-payments" class="tab-content hidden space-y-6">
+          <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-lg font-bold text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined">payments</span> Daftar Verifikasi Pembayaran Masuk
+              </h2>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+              <table class="w-full text-left border-collapse min-w-[1000px]">
+                <thead class="bg-surface-container-low border-b border-outline-variant">
+                  <tr class="text-on-surface-variant font-label-md text-sm">
+                    <th class="px-6 py-4">Customer</th>
+                    <th class="px-6 py-4">Booking ID</th>
+                    <th class="px-6 py-4">Jadwal &amp; Olahraga</th>
+                    <th class="px-6 py-4">Jumlah Bayar</th>
+                    <th class="px-6 py-4">Bukti Transfer</th>
+                    <th class="px-6 py-4">Status Pembayaran</th>
+                    <th class="px-6 py-4">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/50" id="all-payments-tbody">
+                  <!-- Rendered dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div id="admin-payments-pagination"></div>
+          </div>
+        </section>
+
+
+
+        <!-- Receipt Preview Modal -->
+        <div id="receipt-modal"
+          class="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+          <div
+            class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl transform translate-y-4 transition-transform duration-300"
+            id="receipt-modal-content">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+              <h3 class="font-bold text-gray-900 flex items-center gap-1"><span
+                  class="material-symbols-outlined text-primary">image</span> Bukti Transfer Resi</h3>
+              <button onclick="closeReceiptModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div class="flex justify-center bg-gray-50 p-2 rounded-xl border">
+              <img src="" id="receipt-modal-img" class="max-h-[500px] object-contain rounded-lg shadow-sm" />
             </div>
           </div>
-
-          <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
-            <table class="w-full text-left border-collapse min-w-[1000px]">
-              <thead class="bg-surface-container-low border-b border-outline-variant">
-                <tr class="text-on-surface-variant font-label-md text-sm">
-                  <th class="px-6 py-4">Nama Pelanggan</th>
-                  <th class="px-6 py-4">Tanggal</th>
-                  <th class="px-6 py-4">Cabang Olahraga</th>
-                  <th class="px-6 py-4">Jam &amp; Durasi</th>
-                  <th class="px-6 py-4">Total Biaya</th>
-                  <th class="px-6 py-4">Status</th>
-                  <th class="px-6 py-4">Aksi</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-outline-variant/50" id="all-bookings-tbody">
-                <!-- Rendered dynamically by JS -->
-              </tbody>
-            </table>
-          </div>
         </div>
-      </section>
 
-      <!-- Tab: Database Users -->
-      <section id="tab-users" class="tab-content hidden">
-        <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
-          <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
-            <table class="w-full text-left border-collapse min-w-[1000px]">
-              <thead class="bg-surface-container-low border-b border-outline-variant">
-                <tr class="text-on-surface-variant font-label-md text-sm">
-                  <th class="px-6 py-4">Nama Pengguna</th>
-                  <th class="px-6 py-4">Alamat Email</th>
-                  <th class="px-6 py-4">Nomor HP</th>
-                  <th class="px-6 py-4">Akses (Role)</th>
-                  <th class="px-6 py-4">Tanggal Registrasi</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-outline-variant/50" id="all-users-tbody">
-                <!-- Rendered dynamically by JS -->
-              </tbody>
-            </table>
+        <!-- Tab: Database Users -->
+        <section id="tab-users" class="tab-content hidden">
+          <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+            <!-- Filter Bar -->
+            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 mb-6 flex-wrap border-b pb-4">
+              <div class="flex-1 min-w-[280px]">
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                  <input type="text" id="user-search" placeholder="Cari nama, email, atau nomor HP..."
+                    class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-sm text-on-surface placeholder-on-surface-variant/70 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors" />
+                </div>
+              </div>
+              <div class="flex items-center gap-3 flex-wrap text-sm">
+                <div class="flex items-center gap-2">
+                  <label for="user-role-filter" class="text-on-surface-variant font-medium whitespace-nowrap">Akses:</label>
+                  <select id="user-role-filter"
+                    class="border border-outline-variant rounded-lg px-3 py-2 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary">
+                    <option value="all">Semua Akses</option>
+                    <option value="customer">Customer</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <div class="flex items-center gap-2">
+                  <label for="user-type-filter" class="text-on-surface-variant font-medium whitespace-nowrap">Tipe:</label>
+                  <select id="user-type-filter"
+                    class="border border-outline-variant rounded-lg px-3 py-2 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary">
+                    <option value="all">Semua Tipe</option>
+                    <option value="umum">Umum</option>
+                    <option value="karyawan">Karyawan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+              <table class="w-full text-left border-collapse min-w-[1000px]">
+                <thead class="bg-surface-container-low border-b border-outline-variant">
+                  <tr class="text-on-surface-variant font-label-md text-sm">
+                    <th class="px-6 py-4">Nama Pengguna</th>
+                    <th class="px-6 py-4">Alamat Email</th>
+                    <th class="px-6 py-4">Nomor HP</th>
+                    <th class="px-6 py-4">Akses (Role)</th>
+                    <th class="px-6 py-4">Tanggal Registrasi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/50" id="all-users-tbody">
+                  <!-- Rendered dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <!-- Tab: Laporan Bulanan -->
+        <section id="tab-reports" class="tab-content hidden space-y-6">
+          <div class="bg-surface rounded-xl shadow-md p-md border border-outline-variant/30">
+            <div class="flex justify-between items-center mb-6 flex-wrap gap-4 border-b pb-4">
+              <div>
+                <h2 id="report-title-text" class="text-lg font-bold text-primary flex items-center gap-2">
+                  <span class="material-symbols-outlined">analytics</span> Laporan Pembukuan Bulanan
+                </h2>
+                <p id="report-desc-text" class="text-xs text-on-surface-variant mt-1">Pembukuan hasil pendapatan dan rincian per cabang olahraga per bulan.</p>
+              </div>
+              <div class="flex items-center gap-3 text-sm flex-wrap">
+                <div class="flex items-center gap-1.5">
+                  <label for="report-type" class="text-on-surface-variant font-medium">Tipe:</label>
+                  <select id="report-type" onchange="toggleReportType()"
+                    class="border border-outline-variant rounded-lg px-2.5 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary">
+                    <option value="monthly">Bulanan</option>
+                    <option value="annual">Tahunan</option>
+                  </select>
+                </div>
+                
+                <!-- Monthly Filter Container -->
+                <div id="filter-monthly-container" class="flex items-center gap-1.5">
+                  <label for="report-month" class="text-on-surface-variant font-medium">Bulan:</label>
+                  <input type="month" id="report-month"
+                    class="border border-outline-variant rounded-lg px-3 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary" />
+                </div>
+
+                <!-- Annual Filter Container -->
+                <div id="filter-annual-container" class="flex items-center gap-1.5 hidden">
+                  <label for="report-year" class="text-on-surface-variant font-medium">Tahun:</label>
+                  <select id="report-year"
+                    class="border border-outline-variant rounded-lg px-3 py-1.5 text-sm bg-surface-container-low text-on-surface focus:ring-primary focus:border-primary">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+
+                <button onclick="fetchReport()"
+                  class="px-4 py-1.5 bg-primary text-white rounded-lg hover:bg-opacity-95 transition-colors text-sm font-semibold shadow-sm hover:shadow active:scale-95" style="background-color: #0047a1;">Cari</button>
+                
+                <button onclick="exportToExcel()"
+                  class="px-4 py-1.5 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors text-sm font-semibold shadow-sm hover:shadow active:scale-95 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">download</span> Ekspor Excel
+                </button>
+              </div>
+            </div>
+
+            <!-- Report Details (Summary Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant/30 flex flex-col justify-between h-[120px] shadow-sm">
+                <span id="label-total-revenue" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs font-semibold">Total Pendapatan</span>
+                <span class="font-display text-2xl text-primary font-bold" id="report-total-revenue">Rp0</span>
+              </div>
+              <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant/30 flex flex-col justify-between h-[120px] shadow-sm">
+                <span id="label-total-bookings" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-xs font-semibold">Total Booking Selesai</span>
+                <span class="font-display text-2xl text-on-surface font-bold" id="report-total-completed-bookings">0</span>
+              </div>
+            </div>
+
+            <!-- Table of Monthly Breakdown (Tahunan Only) -->
+            <div id="report-monthly-breakdown-container" class="mb-8 space-y-3 hidden">
+              <h3 class="text-md font-bold text-on-surface flex items-center gap-1.5"><span class="material-symbols-outlined text-secondary">calendar_today</span> Pendapatan Bulanan Sepanjang Tahun</h3>
+              <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                  <thead class="bg-surface-container-low border-b border-outline-variant">
+                    <tr class="text-on-surface-variant font-label-md text-sm">
+                      <th class="px-6 py-4">Bulan</th>
+                      <th class="px-6 py-4">Jumlah Booking</th>
+                      <th class="px-6 py-4">Total Durasi (Jam)</th>
+                      <th class="px-6 py-4">Total Pendapatan</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant/50" id="report-monthly-breakdown-tbody">
+                    <!-- Rendered dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Table of Cabor Performance -->
+            <div class="mb-8 space-y-3">
+              <h3 id="report-cabor-title" class="text-md font-bold text-on-surface flex items-center gap-1.5"><span class="material-symbols-outlined text-secondary">sports_soccer</span> Pendapatan Berdasarkan Cabang Olahraga (Cabor)</h3>
+              <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                  <thead class="bg-surface-container-low border-b border-outline-variant">
+                    <tr class="text-on-surface-variant font-label-md text-sm">
+                      <th class="px-6 py-4">Nama Cabang Olahraga (Cabor)</th>
+                      <th class="px-6 py-4">Jumlah Booking</th>
+                      <th class="px-6 py-4">Total Durasi (Jam)</th>
+                      <th class="px-6 py-4">Total Pendapatan</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant/50" id="report-cabor-tbody">
+                    <!-- Rendered dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Detailed Bookings List for Selected Period -->
+            <div class="space-y-3">
+              <h3 id="report-details-title" class="text-md font-bold text-on-surface flex items-center gap-1.5"><span class="material-symbols-outlined text-secondary">receipt_long</span> Rincian Transaksi Pendapatan Bulanan</h3>
+              <div class="overflow-x-auto rounded-lg border border-outline-variant/50">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                  <thead class="bg-surface-container-low border-b border-outline-variant">
+                    <tr class="text-on-surface-variant font-label-md text-sm">
+                      <th class="px-6 py-4">Pelanggan / ID Booking</th>
+                      <th class="px-6 py-4">Tanggal Booking</th>
+                      <th class="px-6 py-4">Cabang Olahraga (Cabor)</th>
+                      <th class="px-6 py-4">Waktu &amp; Durasi</th>
+                      <th class="px-6 py-4">Pendapatan</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant/50" id="report-bookings-tbody">
+                    <!-- Rendered dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </section>
     </div>
   </main>
 
@@ -418,9 +652,33 @@
       window.location.href = 'login.html';
     }
 
+    // Toggle Sidebar on mobile
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      
+      if (sidebar.classList.contains('-translate-x-full')) {
+        // Open
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+        setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+      } else {
+        // Close
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        setTimeout(() => backdrop.classList.add('hidden'), 300);
+      }
+    }
+
     // Switch Tabs
     function switchTab(e, tabId) {
       if (e) e.preventDefault();
+
+      // Close sidebar on mobile
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+        toggleSidebar();
+      }
 
       // Sidebar buttons navigation classes sync
       const activeNavClasses = "bg-surface-container-high text-primary font-bold border-r-4 border-primary translate-x-1 shadow-sm".split(" ");
@@ -432,7 +690,7 @@
       });
 
       // Set active nav link
-      const targetNavId = tabId === 'tab-dashboard' ? 'nav-dashboard' : tabId === 'tab-manage' ? 'nav-manage' : 'nav-users';
+      const targetNavId = tabId.replace('tab-', 'nav-');
       const targetNav = document.getElementById(targetNavId);
       if (targetNav) {
         inactiveNavClasses.forEach(cls => targetNav.classList.remove(cls));
@@ -451,12 +709,16 @@
       const titles = {
         'tab-dashboard': 'Dashboard Overview',
         'tab-manage': 'Kelola Booking Lapangan',
-        'tab-users': 'Database Pengguna'
+        'tab-payments': 'Verifikasi Pembayaran',
+        'tab-users': 'Database Pengguna',
+        'tab-reports': 'Laporan Keuangan & Pembukuan'
       };
       const descs = {
         'tab-dashboard': 'Portal pemantauan reservasi lapangan GOR Jasa Tirta II Sport Center',
         'tab-manage': 'Kelola persetujuan reservasi masuk, penyelesaian, dan pembatalan sewa',
-        'tab-users': 'Daftar database seluruh pelanggan dan administrator GOR yang terdaftar'
+        'tab-payments': 'Lakukan verifikasi bukti transfer pembayaran dari customer',
+        'tab-users': 'Daftar database seluruh pelanggan dan administrator GOR yang terdaftar',
+        'tab-reports': 'Laporan pembukuan bulanan/tahunan, hasil pendapatan, dan ringkasan aktivitas cabang olahraga'
       };
 
       document.getElementById('page-title').innerText = titles[tabId];
@@ -468,9 +730,35 @@
         loadAdminWeeklySchedule();
       } else if (tabId === 'tab-manage') {
         loadAllBookings();
+      } else if (tabId === 'tab-payments') {
+        loadAllPayments();
       } else if (tabId === 'tab-users') {
         loadAllUsers();
+      } else if (tabId === 'tab-reports') {
+        const reportMonthInput = document.getElementById('report-month');
+        if (!reportMonthInput.value) {
+          const now = new Date();
+          const yyyy = now.getFullYear();
+          const mm = String(now.getMonth() + 1).padStart(2, '0');
+          reportMonthInput.value = `${yyyy}-${mm}`;
+        }
+        
+        // Ensure year select is populated
+        const yearSelect = document.getElementById('report-year');
+        if (yearSelect && yearSelect.options.length === 0) {
+          const currentYear = new Date().getFullYear();
+          for (let y = currentYear; y >= currentYear - 5; y--) {
+            const opt = document.createElement('option');
+            opt.value = y;
+            opt.text = y;
+            yearSelect.add(opt);
+          }
+        }
+        
+        fetchReport();
       }
+
+      loadPendingPaymentsBadge();
     }
 
     function triggerManageTab() {
@@ -520,12 +808,53 @@
       }
     }
 
+    function renderPaginationControls(containerId, pagination, onPageChangeName) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      if (!pagination || pagination.totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const { page, totalPages, totalData, limit } = pagination;
+      const startItem = (page - 1) * limit + 1;
+      const endItem = Math.min(page * limit, totalData);
+
+      container.innerHTML = `
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-surface-container-low border-t border-outline-variant">
+          <div class="text-xs text-on-surface-variant font-medium">
+            Menampilkan <strong>${startItem}</strong> - <strong>${endItem}</strong> dari <strong>${totalData}</strong> data
+          </div>
+          <div class="flex items-center gap-2">
+            <button 
+              onclick="${onPageChangeName}(${page - 1})"
+              ${page <= 1 ? 'disabled class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed text-xs font-semibold flex items-center gap-1 bg-white"' : 'class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container text-xs font-semibold flex items-center gap-1 bg-white transition-all"'}
+            >
+              <span class="material-symbols-outlined text-[16px]">chevron_left</span> Sebelumnya
+            </button>
+            
+            <span class="text-xs font-bold px-3 py-1.5 bg-primary/10 text-primary rounded-lg">
+              ${page} / ${totalPages}
+            </span>
+
+            <button 
+              onclick="${onPageChangeName}(${page + 1})"
+              ${page >= totalPages ? 'disabled class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed text-xs font-semibold flex items-center gap-1 bg-white"' : 'class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container text-xs font-semibold flex items-center gap-1 bg-white transition-all"'}
+            >
+              Selanjutnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     // Load All Bookings
-    async function loadAllBookings() {
+    async function loadAllBookings(page = 1) {
       const filterDate = filterDateInput.value;
-      let url = '/api/bookings';
+      let url = `/api/bookings?page=${page}&limit=10`;
       if (filterDate) {
-        url += `?date=${filterDate}`;
+        url += `&date=${filterDate}`;
       }
 
       const tbody = document.getElementById('all-bookings-tbody');
@@ -549,53 +878,62 @@
               const tr = document.createElement('tr');
               tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
 
-              let actionsHtml = '<span class="text-xs text-on-surface-variant font-medium">Tidak ada aksi</span>';
+              let actionsHtml = '<span class="text-xs text-on-surface-variant font-medium">-</span>';
 
-              if (b.status === 'pending') {
+              if (b.status === 'WAITING_PAYMENT') {
                 actionsHtml = `
-                  <div class="flex gap-2">
-                    <button onclick="updateStatus(${b.id}, 'approved')" class="px-3 py-1 bg-primary text-white text-xs font-semibold rounded hover:bg-opacity-95 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Setujui</button>
-                    <button onclick="updateStatus(${b.id}, 'cancelled')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
-                  </div>
+                  <button onclick="updateStatus('${b.id}', 'CANCELLED')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-650 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
                 `;
-              } else if (b.status === 'approved') {
+              } else if (b.status === 'WAITING_VERIFICATION') {
+                actionsHtml = `
+                  <button onclick="switchTab(null, 'tab-payments')" class="px-3 py-1 bg-primary text-white text-xs font-semibold rounded hover:bg-opacity-95 transition-all flex items-center gap-1" style="background-color: #0047a1;"><span class="material-symbols-outlined text-[14px]">payments</span> Verifikasi Resi</button>
+                `;
+              } else if (b.status === 'CONFIRMED') {
                 actionsHtml = `
                   <div class="flex gap-2">
-                    <button onclick="updateStatus(${b.id}, 'completed')" class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">done_all</span> Selesai</button>
-                    <button onclick="updateStatus(${b.id}, 'cancelled')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
+                    <button onclick="updateStatus('${b.id}', 'COMPLETED')" class="px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">done_all</span> Selesai</button>
+                    <button onclick="updateStatus('${b.id}', 'CANCELLED')" class="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">close</span> Batal</button>
                   </div>
                 `;
               }
 
               let badgeStatusColor = "bg-gray-100 text-gray-700";
-              if (b.status.toLowerCase() === 'approved' || b.status.toLowerCase() === 'upcoming') {
+              if (b.status === 'CONFIRMED') {
                 badgeStatusColor = "bg-green-50 text-green-700 border border-green-200";
-              } else if (b.status.toLowerCase() === 'pending') {
+              } else if (b.status === 'WAITING_PAYMENT') {
                 badgeStatusColor = "bg-yellow-50 text-yellow-700 border border-yellow-200";
-              } else if (b.status.toLowerCase() === 'rejected' || b.status.toLowerCase() === 'cancelled') {
+              } else if (b.status === 'WAITING_VERIFICATION') {
+                badgeStatusColor = "bg-blue-50 text-blue-700 border border-blue-200";
+              } else if (b.status === 'CANCELLED' || b.status === 'EXPIRED') {
                 badgeStatusColor = "bg-red-50 text-red-700 border border-red-200";
-              } else if (b.status.toLowerCase() === 'completed') {
+              } else if (b.status === 'COMPLETED') {
                 badgeStatusColor = "bg-gray-100 text-gray-700 border border-gray-200";
               }
 
               tr.innerHTML = `
                 <td class="px-6 py-4">
-                  <strong class="text-on-surface font-semibold">${b.customer_nama}</strong>
+                  <div class="flex items-center gap-1.5">
+                    <strong class="text-on-surface font-semibold">${b.customer_nama}</strong>
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono font-bold bg-surface-container-high rounded text-on-surface-variant">${b.id}</span>
+                  </div>
                   <div class="text-[11px] text-on-surface-variant mt-1 space-y-0.5">
                     <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span> ${b.customer_email}</div>
                     <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">phone</span> ${b.customer_nomor_hp}</div>
                   </div>
                 </td>
-                <td class="px-6 py-4 font-label-md text-sm text-on-surface"><strong>${formatDateIndo(b.booking_date)}</strong></td>
+                <td class="px-6 py-4">
+                  <div class="font-bold text-gray-800">${formatDateIndo(b.booking_date)}</div>
+                </td>
                 <td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-semibold">${b.sport}</span></td>
                 <td class="px-6 py-4 text-sm text-on-surface-variant">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} <span class="text-xs">(${b.duration} Jam)</span></td>
                 <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(b.total_price)}</td>
-                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${badgeStatusColor}">${b.status}</span></td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold uppercase ${badgeStatusColor}">${b.status}</span></td>
                 <td class="px-6 py-4">${actionsHtml}</td>
               `;
               tbody.appendChild(tr);
             });
           }
+          renderPaginationControls('admin-bookings-pagination', result.pagination, 'loadAllBookings');
         }
       } catch (err) {
         console.error(err);
@@ -605,7 +943,7 @@
 
     // Action status updater
     async function updateStatus(id, newStatus) {
-      if (newStatus === 'cancelled' && !confirm('Apakah Anda yakin ingin membatalkan booking ini?')) {
+      if (newStatus === 'CANCELLED' && !confirm('Apakah Anda yakin ingin membatalkan booking ini?')) {
         return;
       }
 
@@ -623,6 +961,7 @@
         if (response.status === 200) {
           showToast(result.message, 'success');
           loadAllBookings();
+          loadPendingPaymentsBadge();
         } else {
           showToast(result.message, 'error');
         }
@@ -631,6 +970,168 @@
         showToast('Gagal memperbarui status booking.', 'error');
       }
     }
+
+    // Load All Payments (Admin)
+    async function loadAllPayments(page = 1) {
+      const tbody = document.getElementById('all-payments-tbody');
+      tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat data pembayaran...</td></tr>';
+
+      try {
+        const response = await fetch(`/api/payments/all?page=${page}&limit=10`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        tbody.innerHTML = '';
+
+        if (result.success) {
+          const verifyPayments = result.payments.filter(p => p.payment_status === 'WAITING_VERIFICATION');
+
+          // Update badge
+          const badge = document.getElementById('pending-payments-badge');
+          if (badge) {
+            if (verifyPayments.length > 0) {
+              badge.innerText = verifyPayments.length;
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+
+          if (verifyPayments.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada pembayaran masuk yang perlu diverifikasi saat ini.</td></tr>';
+          } else {
+            verifyPayments.forEach(p => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+
+              const proofHtml = p.proof_image
+                ? `<button onclick="openReceiptModal('${p.proof_image}')" class="text-primary hover:underline font-semibold flex items-center gap-0.5"><span class="material-symbols-outlined text-[16px]">visibility</span> Lihat Resi</button>`
+                : `<span class="text-gray-400">Tidak ada</span>`;
+
+              tr.innerHTML = `
+                <td class="px-6 py-4">
+                  <strong class="text-on-surface font-semibold">${p.customer_nama}</strong>
+                  <div class="text-[11px] text-on-surface-variant mt-1 space-y-0.5">
+                    <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span> ${p.customer_email}</div>
+                    <div class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">phone</span> ${p.customer_nomor_hp}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 font-mono font-semibold">${p.booking_id}</td>
+                <td class="px-6 py-4">
+                  <div class="font-bold text-gray-800">${formatDateIndo(p.booking_date)}</div>
+                  <div class="text-xs text-on-surface-variant mt-0.5">${p.start_time} - ${p.end_time} (${p.sport})</div>
+                </td>
+                <td class="px-6 py-4 font-bold text-[#00a3ff]">${formatRupiah(p.amount)}</td>
+                <td class="px-6 py-4 text-sm">${proofHtml}</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold uppercase bg-blue-50 text-blue-700 border border-blue-200">${p.payment_status}</span></td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-2">
+                    <button onclick="verifyPayment(${p.payment_id}, 'approve')" class="px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-0.5" style="background-color: #0047a1;"><span class="material-symbols-outlined text-[14px]">check</span> Terima</button>
+                    <button onclick="verifyPayment(${p.payment_id}, 'reject')" class="px-3 py-1.5 bg-red-500 text-white text-xs font-bold rounded-lg hover:bg-red-650 transition-all flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">close</span> Tolak</button>
+                  </div>
+                </td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+          renderPaginationControls('admin-payments-pagination', result.pagination, 'loadAllPayments');
+        }
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-red-500 font-semibold">Gagal memuat data pembayaran.</td></tr>';
+      }
+    }
+
+    // Verify Payment (Admin Action)
+    async function verifyPayment(id, action) {
+      const confirmMsg = action === 'approve'
+        ? 'Apakah Anda yakin ingin MENYETUJUI pembayaran ini?'
+        : 'Apakah Anda yakin ingin MENOLAK pembayaran ini?';
+
+      if (!confirm(confirmMsg)) return;
+
+      try {
+        const response = await fetch(`/api/payments/${id}/verify`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ action })
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showToast(result.message, 'success');
+          loadAllPayments();
+          loadPendingPaymentsBadge();
+        } else {
+          showToast(result.message || 'Gagal melakukan verifikasi.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Terjadi kesalahan koneksi saat memproses verifikasi.', 'error');
+      }
+    }
+
+    async function loadPendingPaymentsBadge() {
+      try {
+        const response = await fetch('/api/payments/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        if (result.success) {
+          const pendingCount = result.payments.filter(p => p.payment_status === 'WAITING_VERIFICATION').length;
+          const badge = document.getElementById('pending-payments-badge');
+          if (badge) {
+            if (pendingCount > 0) {
+              badge.innerText = pendingCount;
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+
+
+    // Receipt Modal controls
+    const receiptModal = document.getElementById('receipt-modal');
+    const receiptModalContent = document.getElementById('receipt-modal-content');
+    const receiptModalImg = document.getElementById('receipt-modal-img');
+
+    function openReceiptModal(imageUrl) {
+      receiptModalImg.src = imageUrl;
+      receiptModal.classList.remove('hidden');
+      setTimeout(() => {
+        receiptModal.classList.remove('opacity-0');
+        receiptModalContent.classList.remove('translate-y-4');
+      }, 10);
+    }
+
+    function closeReceiptModal() {
+      receiptModal.classList.add('opacity-0');
+      receiptModalContent.classList.add('translate-y-4');
+      setTimeout(() => {
+        receiptModal.classList.add('hidden');
+        receiptModalImg.src = '';
+      }, 300);
+    }
+
+    // Global User state
+    let allUsers = [];
+
+    // Global Report state for Excel export
+    let activeReportType = 'monthly';
+    let activeReportData = null;
 
     // Load Database Users
     async function loadAllUsers() {
@@ -645,30 +1146,86 @@
         });
         const result = await response.json();
 
-        tbody.innerHTML = '';
         if (result.success) {
-          if (result.users.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada data pengguna.</td></tr>';
-          } else {
-            result.users.forEach(u => {
-              const tr = document.createElement('tr');
-              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
-              tr.innerHTML = `
-                <td class="px-6 py-4 font-semibold text-on-surface"><strong>${u.nama}</strong></td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">${u.email}</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">${u.nomor_hp}</td>
-                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-blue-50 text-primary border border-blue-200'}">${u.role}</span></td>
-                <td class="px-6 py-4 text-xs text-on-surface-variant">${new Date(u.created_at).toLocaleString('id-ID')}</td>
-              `;
-              tbody.appendChild(tr);
-            });
-          }
+          allUsers = result.users || [];
+          applyUserFilters();
+        } else {
+          tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-red-500 font-semibold">Gagal memuat data pengguna.</td></tr>';
         }
       } catch (err) {
         console.error(err);
         tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-red-500 font-semibold">Gagal memuat data pengguna.</td></tr>';
       }
     }
+
+    function applyUserFilters() {
+      const searchQuery = document.getElementById('user-search').value.toLowerCase().trim();
+      const roleFilter = document.getElementById('user-role-filter').value;
+      const typeFilter = document.getElementById('user-type-filter').value;
+
+      const filtered = allUsers.filter(u => {
+        // 1. Search Query filter (matches nama, email, or nomor_hp)
+        const matchSearch = !searchQuery || 
+          (u.nama && u.nama.toLowerCase().includes(searchQuery)) ||
+          (u.email && u.email.toLowerCase().includes(searchQuery)) ||
+          (u.nomor_hp && u.nomor_hp.toLowerCase().includes(searchQuery));
+
+        // 2. Role filter
+        const matchRole = roleFilter === 'all' || u.role === roleFilter;
+
+        // 3. Type filter
+        let matchType = true;
+        if (typeFilter === 'karyawan') {
+          matchType = !!u.is_karyawan;
+        } else if (typeFilter === 'umum') {
+          matchType = !u.is_karyawan;
+        }
+
+        return matchSearch && matchRole && matchType;
+      });
+
+      renderUsersTable(filtered);
+    }
+
+    function renderUsersTable(users) {
+      const tbody = document.getElementById('all-users-tbody');
+      tbody.innerHTML = '';
+
+      if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada data pengguna yang cocok dengan filter.</td></tr>';
+        return;
+      }
+
+      users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+        
+        let nameHtml = `<strong class="text-on-surface font-semibold">${u.nama}</strong>`;
+        if (u.is_karyawan) {
+          nameHtml = `
+            <div class="flex items-center gap-1.5 font-semibold text-on-surface">
+              <strong class="text-on-surface font-semibold">${u.nama}</strong>
+              <span class="bg-teal-50 text-teal-700 border border-teal-200 px-1.5 py-0.5 rounded text-[10px] font-bold">Karyawan</span>
+            </div>
+            ${u.nik_karyawan ? `<div class="text-[10px] text-on-surface-variant font-mono mt-0.5">NIK: ${u.nik_karyawan}</div>` : ''}
+          `;
+        }
+
+        tr.innerHTML = `
+          <td class="px-6 py-4">${nameHtml}</td>
+          <td class="px-6 py-4 text-sm text-on-surface-variant">${u.email}</td>
+          <td class="px-6 py-4 text-sm text-on-surface-variant">${u.nomor_hp}</td>
+          <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-blue-50 text-primary border border-blue-200'}">${u.role}</span></td>
+          <td class="px-6 py-4 text-xs text-on-surface-variant">${new Date(u.created_at).toLocaleString('id-ID')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Add event listeners for filters
+    document.getElementById('user-search').addEventListener('input', applyUserFilters);
+    document.getElementById('user-role-filter').addEventListener('change', applyUserFilters);
+    document.getElementById('user-type-filter').addEventListener('change', applyUserFilters);
 
     // Admin Weekly Calendar state
     let adminCurrentWeekMonday = getMonday(new Date());
@@ -754,7 +1311,7 @@
 
           const activeBooking = bookings.find(b => {
             if (b.booking_date !== cellDate) return false;
-            if (b.status === 'cancelled') return false;
+            if (['CANCELLED', 'EXPIRED'].includes(b.status.toUpperCase())) return false;
 
             const bStart = parseInt(b.start_time.split(':')[0], 10);
             const bEnd = parseInt(b.end_time.split(':')[0], 10);
@@ -767,9 +1324,11 @@
 
           if (activeBooking) {
             let statusBadge = "bg-yellow-50 text-yellow-700 border border-yellow-200";
-            if (activeBooking.status.toLowerCase() === 'approved') {
+            if (activeBooking.status.toUpperCase() === 'CONFIRMED') {
               statusBadge = "bg-green-50 text-green-700 border border-green-200";
-            } else if (activeBooking.status.toLowerCase() === 'completed') {
+            } else if (activeBooking.status.toUpperCase() === 'WAITING_VERIFICATION') {
+              statusBadge = "bg-blue-50 text-blue-700 border border-blue-200";
+            } else if (activeBooking.status.toUpperCase() === 'COMPLETED') {
               statusBadge = "bg-gray-100 text-gray-700 border border-gray-200";
             }
 
@@ -815,9 +1374,370 @@
       loadAdminWeeklySchedule();
     });
 
+    // Load Monthly Bookkeeping/Revenue Report
+    async function loadMonthlyReport() {
+      const monthVal = document.getElementById('report-month').value;
+      if (!monthVal) {
+        showToast('Pilih bulan terlebih dahulu.', 'error');
+        return;
+      }
+      
+      const [year, month] = monthVal.split('-');
+      
+      const tbodyCabor = document.getElementById('report-cabor-tbody');
+      const tbodyBookings = document.getElementById('report-bookings-tbody');
+      const monthlyContainer = document.getElementById('report-monthly-breakdown-container');
+      
+      tbodyCabor.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat data cabor...</td></tr>';
+      tbodyBookings.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat rincian transaksi...</td></tr>';
+      
+      // Hide monthly breakdown container (for monthly view)
+      monthlyContainer.classList.add('hidden');
+      
+      try {
+        const response = await fetch(`/api/dashboard/monthly-report?year=${year}&month=${month}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+          activeReportType = 'monthly';
+          activeReportData = result;
+
+          // Reset headers/titles to Monthly
+          document.getElementById('report-title-text').innerHTML = '<span class="material-symbols-outlined">analytics</span> Laporan Pembukuan Bulanan';
+          document.getElementById('report-desc-text').innerText = 'Pembukuan hasil pendapatan dan rincian per cabang olahraga per bulan.';
+          document.getElementById('label-total-revenue').innerText = 'Total Pendapatan';
+          document.getElementById('label-total-bookings').innerText = 'Total Booking Selesai';
+          document.getElementById('report-cabor-title').innerHTML = '<span class="material-symbols-outlined text-secondary">sports_soccer</span> Pendapatan Berdasarkan Cabang Olahraga (Cabor)';
+          document.getElementById('report-details-title').innerHTML = '<span class="material-symbols-outlined text-secondary">receipt_long</span> Rincian Transaksi Pendapatan Bulanan';
+
+          // Update summary stats
+          document.getElementById('report-total-revenue').innerText = formatRupiah(result.summary.totalRevenue || 0);
+          document.getElementById('report-total-completed-bookings').innerText = result.summary.totalBookings || 0;
+          
+          // Render cabor breakdown
+          tbodyCabor.innerHTML = '';
+          if (result.caborBreakdown.length === 0) {
+            tbodyCabor.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada transaksi pendapatan pada bulan ini.</td></tr>';
+          } else {
+            result.caborBreakdown.forEach(c => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+              tr.innerHTML = `
+                <td class="px-6 py-4 font-semibold text-on-surface">${c.sport}</td>
+                <td class="px-6 py-4 text-on-surface-variant">${c.count} Booking</td>
+                <td class="px-6 py-4 text-on-surface-variant">${c.totalDuration} Jam</td>
+                <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(c.revenue)}</td>
+              `;
+              tbodyCabor.appendChild(tr);
+            });
+          }
+          
+          // Render detailed bookings
+          tbodyBookings.innerHTML = '';
+          if (result.bookings.length === 0) {
+            tbodyBookings.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada data transaksi.</td></tr>';
+          } else {
+            result.bookings.forEach(b => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+              tr.innerHTML = `
+                <td class="px-6 py-4">
+                  <div class="font-bold text-on-surface">${b.customer_nama}</div>
+                  <div class="text-[10px] text-on-surface-variant font-mono mt-0.5">ID: ${b.id}</div>
+                </td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant font-medium">${formatDateIndo(b.booking_date)}</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-primary text-xs font-semibold border border-blue-200">${b.sport}</span></td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} (${b.duration} Jam)</td>
+                <td class="px-6 py-4 font-bold text-green-700">${formatRupiah(b.total_price)}</td>
+              `;
+              tbodyBookings.appendChild(tr);
+            });
+          }
+        } else {
+          showToast(result.message || 'Gagal memuat laporan bulanan.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat data laporan dari server.', 'error');
+      }
+    }
+
+    function toggleReportType() {
+      const type = document.getElementById('report-type').value;
+      const monthlyContainer = document.getElementById('filter-monthly-container');
+      const annualContainer = document.getElementById('filter-annual-container');
+      
+      if (type === 'monthly') {
+        monthlyContainer.classList.remove('hidden');
+        annualContainer.classList.add('hidden');
+      } else {
+        monthlyContainer.classList.add('hidden');
+        annualContainer.classList.remove('hidden');
+        
+        // Populate years in select if empty
+        const yearSelect = document.getElementById('report-year');
+        if (yearSelect.options.length === 0) {
+          const currentYear = new Date().getFullYear();
+          for (let y = currentYear; y >= currentYear - 5; y--) {
+            const opt = document.createElement('option');
+            opt.value = y;
+            opt.text = y;
+            yearSelect.add(opt);
+          }
+        }
+      }
+    }
+
+    function fetchReport() {
+      const type = document.getElementById('report-type').value;
+      if (type === 'monthly') {
+        loadMonthlyReport();
+      } else {
+        loadAnnualReport();
+      }
+    }
+
+    async function loadAnnualReport() {
+      const year = document.getElementById('report-year').value;
+      if (!year) {
+        showToast('Pilih tahun terlebih dahulu.', 'error');
+        return;
+      }
+      
+      const tbodyCabor = document.getElementById('report-cabor-tbody');
+      const tbodyBookings = document.getElementById('report-bookings-tbody');
+      const tbodyMonthly = document.getElementById('report-monthly-breakdown-tbody');
+      const monthlyContainer = document.getElementById('report-monthly-breakdown-container');
+      
+      tbodyCabor.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat data cabor...</td></tr>';
+      tbodyBookings.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat rincian transaksi...</td></tr>';
+      tbodyMonthly.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant font-medium flex items-center justify-center gap-2"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> Memuat performa bulanan...</td></tr>';
+      
+      // Show monthly breakdown container
+      monthlyContainer.classList.remove('hidden');
+      
+      try {
+        const response = await fetch(`/api/dashboard/annual-report?year=${year}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+          activeReportType = 'annual';
+          activeReportData = result;
+
+          // Update titles & labels to Yearly
+          document.getElementById('report-title-text').innerHTML = '<span class="material-symbols-outlined">analytics</span> Laporan Pembukuan Tahunan';
+          document.getElementById('report-desc-text').innerText = 'Pembukuan hasil pendapatan dan rincian per cabang olahraga per tahun.';
+          document.getElementById('label-total-revenue').innerText = 'Total Pendapatan Tahunan';
+          document.getElementById('label-total-bookings').innerText = 'Total Booking Selesai Tahunan';
+          document.getElementById('report-cabor-title').innerHTML = '<span class="material-symbols-outlined text-secondary">sports_soccer</span> Pendapatan Tahunan Berdasarkan Cabang Olahraga (Cabor)';
+          document.getElementById('report-details-title').innerHTML = '<span class="material-symbols-outlined text-secondary">receipt_long</span> Rincian Transaksi Pendapatan Tahunan';
+
+          // Update summary stats
+          document.getElementById('report-total-revenue').innerText = formatRupiah(result.summary.totalRevenue || 0);
+          document.getElementById('report-total-completed-bookings').innerText = result.summary.totalBookings || 0;
+          
+          // Render Monthly Breakdown
+          tbodyMonthly.innerHTML = '';
+          result.monthlyBreakdown.forEach(m => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+            tr.innerHTML = `
+              <td class="px-6 py-4 font-semibold text-on-surface">${m.monthName}</td>
+              <td class="px-6 py-4 text-on-surface-variant">${m.count} Booking</td>
+              <td class="px-6 py-4 text-on-surface-variant">${m.totalDuration} Jam</td>
+              <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(m.revenue)}</td>
+            `;
+            tbodyMonthly.appendChild(tr);
+          });
+
+          // Render cabor breakdown
+          tbodyCabor.innerHTML = '';
+          if (result.caborBreakdown.length === 0) {
+            tbodyCabor.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada transaksi pendapatan pada tahun ini.</td></tr>';
+          } else {
+            result.caborBreakdown.forEach(c => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+              tr.innerHTML = `
+                <td class="px-6 py-4 font-semibold text-on-surface">${c.sport}</td>
+                <td class="px-6 py-4 text-on-surface-variant">${c.count} Booking</td>
+                <td class="px-6 py-4 text-on-surface-variant">${c.totalDuration} Jam</td>
+                <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(c.revenue)}</td>
+              `;
+              tbodyCabor.appendChild(tr);
+            });
+          }
+          
+          // Render detailed bookings
+          tbodyBookings.innerHTML = '';
+          if (result.bookings.length === 0) {
+            tbodyBookings.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant font-medium">Tidak ada data transaksi.</td></tr>';
+          } else {
+            result.bookings.forEach(b => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+              tr.innerHTML = `
+                <td class="px-6 py-4">
+                  <div class="font-bold text-on-surface">${b.customer_nama}</div>
+                  <div class="text-[10px] text-on-surface-variant font-mono mt-0.5">ID: ${b.id}</div>
+                </td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant font-medium">${formatDateIndo(b.booking_date)}</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-primary text-xs font-semibold border border-blue-200">${b.sport}</span></td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} (${b.duration} Jam)</td>
+                <td class="px-6 py-4 font-bold text-green-700">${formatRupiah(b.total_price)}</td>
+              `;
+              tbodyBookings.appendChild(tr);
+            });
+          }
+        } else {
+          showToast(result.message || 'Gagal memuat laporan tahunan.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat data laporan dari server.', 'error');
+      }
+    }
+
+    function exportToExcel() {
+      if (!activeReportData) {
+        showToast('Tidak ada data laporan untuk diekspor. Silakan cari laporan terlebih dahulu.', 'error');
+        return;
+      }
+      
+      // Utility function to auto-fit column widths based on maximum length of cell contents
+      const autofitColumns = (ws, data) => {
+        if (!data || data.length === 0) return;
+        const keys = Object.keys(data[0]);
+        const widths = keys.map(key => {
+          let maxLen = key.toString().length;
+          data.forEach(row => {
+            const val = row[key];
+            if (val !== undefined && val !== null) {
+              const len = val.toString().length;
+              if (len > maxLen) maxLen = len;
+            }
+          });
+          return { wch: maxLen + 3 }; // Add 3 characters padding for readability
+        });
+        ws['!cols'] = widths;
+      };
+      
+      try {
+        const wb = XLSX.utils.book_new();
+        
+        if (activeReportType === 'monthly') {
+          // Prepare Monthly Summary Sheet
+          const monthVal = document.getElementById('report-month').value;
+          const summaryData = [
+            { "Kategori": "Tipe Laporan", "Nilai": "Laporan Pendapatan Bulanan GOR" },
+            { "Kategori": "Periode", "Nilai": monthVal },
+            { "Kategori": "Total Pendapatan", "Nilai": formatRupiah(activeReportData.summary.totalRevenue) },
+            { "Kategori": "Total Booking Selesai", "Nilai": activeReportData.summary.totalBookings + " Transaksi" }
+          ];
+          const wsSummary = XLSX.utils.json_to_sheet(summaryData);
+          autofitColumns(wsSummary, summaryData);
+          XLSX.utils.book_append_sheet(wb, wsSummary, "Ringkasan");
+          
+          // Prepare Cabor Performance Sheet
+          const caborData = activeReportData.caborBreakdown.map(c => ({
+            "Nama Cabang Olahraga (Cabor)": c.sport,
+            "Jumlah Booking": c.count + " Booking",
+            "Total Durasi (Jam)": c.totalDuration + " Jam",
+            "Total Pendapatan": formatRupiah(c.revenue)
+          }));
+          const wsCabor = XLSX.utils.json_to_sheet(caborData);
+          autofitColumns(wsCabor, caborData);
+          XLSX.utils.book_append_sheet(wb, wsCabor, "Pendapatan Cabor");
+          
+          // Prepare Detailed Bookings Sheet
+          const detailData = activeReportData.bookings.map(b => ({
+            "ID Booking": b.id,
+            "Nama Pelanggan": b.customer_nama,
+            "Tanggal Booking": formatDateIndo(b.booking_date),
+            "Cabang Olahraga (Cabor)": b.sport,
+            "Waktu": `${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} (${b.duration} Jam)`,
+            "Pendapatan": formatRupiah(b.total_price)
+          }));
+          const wsDetail = XLSX.utils.json_to_sheet(detailData);
+          autofitColumns(wsDetail, detailData);
+          XLSX.utils.book_append_sheet(wb, wsDetail, "Rincian Transaksi");
+          
+          // Write file
+          XLSX.writeFile(wb, `Laporan_Bulanan_${monthVal}.xlsx`);
+          showToast('Ekspor Excel bulanan berhasil!', 'success');
+          
+        } else {
+          // Prepare Yearly Summary Sheet
+          const yearVal = document.getElementById('report-year').value;
+          const summaryData = [
+            { "Kategori": "Tipe Laporan", "Nilai": "Laporan Pendapatan Tahunan GOR" },
+            { "Kategori": "Periode (Tahun)", "Nilai": yearVal },
+            { "Kategori": "Total Pendapatan Tahunan", "Nilai": formatRupiah(activeReportData.summary.totalRevenue) },
+            { "Kategori": "Total Booking Selesai Tahunan", "Nilai": activeReportData.summary.totalBookings + " Transaksi" }
+          ];
+          const wsSummary = XLSX.utils.json_to_sheet(summaryData);
+          autofitColumns(wsSummary, summaryData);
+          XLSX.utils.book_append_sheet(wb, wsSummary, "Ringkasan");
+          
+          // Prepare Monthly Breakdown Sheet (Yearly only)
+          const monthlyData = activeReportData.monthlyBreakdown.map(m => ({
+            "Bulan": m.monthName,
+            "Jumlah Booking": m.count + " Booking",
+            "Total Durasi (Jam)": m.totalDuration + " Jam",
+            "Total Pendapatan": formatRupiah(m.revenue)
+          }));
+          const wsMonthly = XLSX.utils.json_to_sheet(monthlyData);
+          autofitColumns(wsMonthly, monthlyData);
+          XLSX.utils.book_append_sheet(wb, wsMonthly, "Performa Bulanan");
+          
+          // Prepare Cabor Performance Sheet
+          const caborData = activeReportData.caborBreakdown.map(c => ({
+            "Nama Cabang Olahraga (Cabor)": c.sport,
+            "Jumlah Booking": c.count + " Booking",
+            "Total Durasi (Jam)": c.totalDuration + " Jam",
+            "Total Pendapatan": formatRupiah(c.revenue)
+          }));
+          const wsCabor = XLSX.utils.json_to_sheet(caborData);
+          autofitColumns(wsCabor, caborData);
+          XLSX.utils.book_append_sheet(wb, wsCabor, "Pendapatan Cabor");
+          
+          // Prepare Detailed Bookings Sheet
+          const detailData = activeReportData.bookings.map(b => ({
+            "ID Booking": b.id,
+            "Nama Pelanggan": b.customer_nama,
+            "Tanggal Booking": formatDateIndo(b.booking_date),
+            "Cabang Olahraga (Cabor)": b.sport,
+            "Waktu": `${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)} (${b.duration} Jam)`,
+            "Pendapatan": formatRupiah(b.total_price)
+          }));
+          const wsDetail = XLSX.utils.json_to_sheet(detailData);
+          autofitColumns(wsDetail, detailData);
+          XLSX.utils.book_append_sheet(wb, wsDetail, "Rincian Transaksi");
+          
+          // Write file
+          XLSX.writeFile(wb, `Laporan_Tahunan_${yearVal}.xlsx`);
+          showToast('Ekspor Excel tahunan berhasil!', 'success');
+        }
+        
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal mengekspor laporan ke Excel.', 'error');
+      }
+    }
+
     // Initial load
     switchTab(null, 'tab-dashboard');
   </script>
+  <!-- SheetJS for Excel Export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </body>
 
 </html>

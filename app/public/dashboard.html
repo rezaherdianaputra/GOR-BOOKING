@@ -128,36 +128,72 @@
   </style>
 </head>
 
-<body class="font-body-md text-on-surface antialiased min-h-screen flex">
+<body class="font-body-md text-on-surface antialiased min-h-screen flex overflow-x-hidden">
+
+  <!-- Sidebar Backdrop for mobile -->
+  <div id="sidebar-backdrop" onclick="toggleSidebar()"
+    class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity duration-300 opacity-0"></div>
 
   <!-- SideNavBar -->
-  <aside
-    class="bg-surface dark:bg-surface-dim h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col py-md px-sm z-50">
-    <div class="mb-xl flex items-center px-4">
-      <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
-        <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+  <aside id="sidebar"
+    class="bg-surface dark:bg-surface-dim h-full w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col py-md px-sm z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+    <div class="mb-xl flex items-center justify-between px-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 mr-3 overflow-hidden flex items-center justify-center">
+          <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
+          <p class="font-label-sm text-label-sm text-on-surface-variant">Sport Center</p>
+        </div>
       </div>
-      <div>
-        <h1 class="font-display font-bold text-primary text-lg leading-tight">Jasa Tirta II</h1>
-        <p class="font-label-sm text-label-sm text-on-surface-variant">Sport Center</p>
-      </div>
+      <!-- Close Button for Mobile -->
+      <button onclick="toggleSidebar()"
+        class="lg:hidden p-1 hover:bg-surface-container rounded-full text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
     </div>
-    <nav class="flex-1 space-y-2" id="sidebar-nav">
-      <!-- Active: Booking Lapangan -->
+    <nav class="flex-1 space-y-2 overflow-y-auto pr-1" id="sidebar-nav">
+      <!-- Booking Lapangan -->
       <a id="nav-booking"
         class="flex items-center px-4 py-3 rounded-lg bg-surface-container-high text-primary font-bold border-r-4 border-primary shadow-sm group cursor-pointer"
         onclick="switchTab(event, 'tab-booking')">
         <span class="material-symbols-outlined mr-4">sports_tennis</span>
         <span class="font-label-md text-label-md">Booking Lapangan</span>
       </a>
-      <!-- Inactive: Riwayat Booking -->
+      <!-- Booking Aktif -->
+      <a id="nav-active"
+        class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer relative"
+        onclick="switchTab(event, 'tab-active')">
+        <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">pending_actions</span>
+        <span class="font-label-md text-label-md">Booking Aktif</span>
+        <span id="active-booking-badge"
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+      </a>
+      <!-- Riwayat Booking -->
       <a id="nav-history"
         class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer"
         onclick="switchTab(event, 'tab-history')">
         <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">history</span>
         <span class="font-label-md text-label-md">Riwayat Booking</span>
       </a>
-      <!-- Inactive: Profil Saya -->
+      <!-- Riwayat Pembayaran -->
+      <a id="nav-payments"
+        class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer"
+        onclick="switchTab(event, 'tab-payments')">
+        <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">payments</span>
+        <span class="font-label-md text-label-md">Riwayat Pembayaran</span>
+      </a>
+      <!-- Notifikasi / Notification Center -->
+      <a id="nav-notifications"
+        class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer relative"
+        onclick="switchTab(event, 'tab-notifications')">
+        <span class="material-symbols-outlined mr-4 group-hover:text-primary transition-colors">notifications</span>
+        <span class="font-label-md text-label-md">Notifikasi</span>
+        <span id="notification-badge"
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+      </a>
+      <!-- Profil Saya -->
       <a id="nav-profile"
         class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-all group cursor-pointer"
         onclick="switchTab(event, 'tab-profile')">
@@ -185,9 +221,25 @@
   </aside>
 
   <!-- Main Content Area -->
-  <main class="ml-64 flex-1 flex flex-col min-h-screen pb-12">
+  <main class="lg:ml-64 flex-1 flex flex-col min-h-screen pb-12">
+    <!-- Mobile Header -->
+    <div
+      class="lg:hidden flex items-center justify-between bg-surface px-md py-xs border-b border-outline-variant dark:border-outline sticky top-0 z-40 shadow-sm">
+      <div class="flex items-center gap-xs">
+        <button onclick="toggleSidebar()"
+          class="p-xs hover:bg-surface-container rounded-lg flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-[28px]">menu</span>
+        </button>
+        <div class="w-8 h-8 overflow-hidden flex items-center justify-center">
+          <img alt="Logo Perum Jasa Tirta II" class="w-full h-auto object-contain" src="images/logo-pjt.png" />
+        </div>
+        <span class="font-display font-bold text-primary text-base">Jasa Tirta II</span>
+      </div>
+    </div>
+
     <!-- Header -->
-    <header class="pt-10 pb-6 px-10 flex justify-between items-end">
+    <header
+      class="pt-6 lg:pt-10 pb-4 lg:pb-6 px-4 lg:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
       <div>
         <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2 tracking-tight" id="page-title">Pesan Lapangan
         </h2>
@@ -202,7 +254,7 @@
     </header>
 
     <!-- Tab: Booking -->
-    <section id="tab-booking" class="tab-content px-10 space-y-6">
+    <section id="tab-booking" class="tab-content px-4 lg:px-10 space-y-6">
       <!-- Top Day Selector Row -->
       <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-6">
         <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -318,7 +370,7 @@
               <div>
                 <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Jam Mulai</label>
                 <input
-                  class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer placeholder-outline"
+                  class="w-full bg-surface-container-low border border-transparent rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:outline-none"
                   id="form-start-time" placeholder="Pilih jam dari kalender" readonly type="text" />
               </div>
               <!-- Duration -->
@@ -326,7 +378,7 @@
                 <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Durasi Sewa</label>
                 <div class="relative">
                   <select id="form-duration"
-                    class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                    class="w-full appearance-none bg-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                     <option value="1">1 Jam</option>
                     <option value="2">2 Jam</option>
                     <option value="3">3 Jam</option>
@@ -341,7 +393,7 @@
                 <label class="block font-label-sm text-sm text-on-surface-variant mb-1">Cabang Olahraga</label>
                 <div class="relative">
                   <select id="form-sport"
-                    class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                    class="w-full appearance-none bg-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-sm focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                     <option value="">Pilih olahraga</option>
                     <option value="Basket">Bola Basket</option>
                     <option value="Badminton">Bulu Tangkis</option>
@@ -356,7 +408,7 @@
               <div class="bg-[#f2f9ff] border border-blue-100 rounded-xl p-4 mt-6">
                 <div class="flex justify-between items-center mb-2">
                   <span class="font-body-sm text-sm text-on-surface-variant">Tarif Sewa:</span>
-                  <span class="font-body-sm text-sm text-on-surface">Rp100.000 / Jam</span>
+                  <span class="font-body-sm text-sm text-on-surface" id="form-hourly-rate">Rp100.000 / Jam</span>
                 </div>
                 <div class="h-px w-full bg-blue-100 my-3"></div>
                 <div class="flex justify-between items-center">
@@ -377,8 +429,133 @@
       </div>
     </section>
 
+    <!-- Tab: Active Bookings -->
+    <section id="tab-active" class="tab-content hidden px-4 lg:px-10 space-y-6">
+      <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-6">
+        <div class="flex items-center justify-between mb-6 border-b border-outline-variant/30 pb-4">
+          <div class="flex items-center text-primary">
+            <span class="material-symbols-outlined mr-2">pending_actions</span>
+            <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Booking Aktif</h3>
+          </div>
+          <p class="text-xs text-on-surface-variant">Menampilkan pemesanan Anda yang sedang berjalan, menunggu
+            pembayaran, atau menunggu verifikasi.</p>
+        </div>
+
+        <div id="active-bookings-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Payment History -->
+    <section id="tab-payments" class="tab-content hidden px-4 lg:px-10">
+      <div
+        class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant overflow-hidden">
+        <div class="p-6 border-b border-outline-variant/30 bg-surface-container-low flex justify-between items-center">
+          <h3 class="font-headline-md text-lg font-bold text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined">payments</span> Riwayat Pembayaran
+          </h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low border-b border-outline-variant">
+              <tr class="text-on-surface-variant font-label-md text-sm">
+                <th class="px-6 py-4">Booking ID</th>
+                <th class="px-6 py-4">Tanggal Main</th>
+                <th class="px-6 py-4">Olahraga</th>
+                <th class="px-6 py-4">Jumlah Bayar</th>
+                <th class="px-6 py-4">Bukti Resi</th>
+                <th class="px-6 py-4">Status Pembayaran</th>
+                <th class="px-6 py-4">Dibuat Pada</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/50" id="payments-history-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="payments-pagination"></div>
+      </div>
+    </section>
+
+    <!-- Tab: Notification Center -->
+    <section id="tab-notifications" class="tab-content hidden px-4 lg:px-10">
+      <div
+        class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-8 max-w-4xl mx-auto">
+        <div class="flex items-center justify-between mb-6 border-b border-outline-variant/30 pb-4">
+          <div class="flex items-center text-primary">
+            <span class="material-symbols-outlined mr-3">notifications</span>
+            <h3 class="font-headline-md text-[20px] font-bold text-on-surface">Pusat Notifikasi</h3>
+          </div>
+          <button onclick="markAllNotificationsAsRead()"
+            class="px-4 py-2 border border-outline-variant text-on-surface hover:bg-surface-container rounded-lg text-xs font-semibold flex items-center gap-1 transition-all">
+            <span class="material-symbols-outlined text-[16px]">done_all</span> Tandai Semua Dibaca
+          </button>
+        </div>
+
+        <div class="space-y-3" id="notifications-list-container">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Upload Proof Modal -->
+    <div id="upload-proof-modal"
+      class="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+      <div
+        class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-100 transform translate-y-4 transition-transform duration-300"
+        id="upload-proof-modal-content">
+        <div class="flex justify-between items-center border-b pb-3 mb-5">
+          <h3 class="font-headline-md text-lg font-bold text-gray-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">upload_file</span> Unggah Bukti Transfer
+          </h3>
+          <button onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <form id="payment-upload-form" class="space-y-4" enctype="multipart/form-data">
+          <input type="hidden" id="upload-booking-id" name="bookingId" />
+
+          <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-xs space-y-2">
+            <p class="font-bold text-blue-900">Petunjuk Transfer Bank:</p>
+            <p class="text-blue-800">Transfer tepat sesuai nominal tagihan ke rekening berikut:</p>
+            <div class="font-mono text-[13px] bg-white border border-blue-100 p-3 rounded-lg space-y-1 text-gray-800">
+              <div>Bank: <strong id="modal-bank-name">...</strong></div>
+              <div>No. Rek: <strong id="modal-bank-account">...</strong></div>
+              <div>Penerima: <strong id="modal-bank-recipient">...</strong></div>
+              <div class="border-t pt-1.5 mt-1.5">Nominal: <strong class="text-primary" id="modal-amount">...</strong>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Pilih File Bukti (Maks. 5 MB)</label>
+            <input type="file" id="upload-file-input" name="proof" accept="image/png, image/jpeg, image/jpg" required
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-primary file:cursor-pointer hover:file:bg-blue-100 border border-gray-300 rounded-lg p-1.5 focus:outline-none" />
+            <p class="text-[10px] text-gray-500 mt-1">Format file yang didukung: PNG, JPG, JPEG. Maksimum file 5MB.</p>
+          </div>
+
+          <!-- Image Preview Area -->
+          <div id="image-preview-container"
+            class="hidden border border-dashed border-gray-300 rounded-xl p-2 flex items-center justify-center bg-gray-50">
+            <img src="" id="upload-image-preview" class="max-h-40 object-contain rounded-lg" />
+          </div>
+
+          <div class="flex gap-3 justify-end pt-4">
+            <button type="button" onclick="closeUploadModal()"
+              class="px-5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors">Batal</button>
+            <button type="submit"
+              class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-container transition-all flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[18px]">check</span> Unggah Bukti
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Tab: History -->
-    <section id="tab-history" class="tab-content hidden px-10">
+    <section id="tab-history" class="tab-content hidden px-4 lg:px-10">
       <div
         class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant overflow-hidden">
         <div class="overflow-x-auto">
@@ -399,11 +576,12 @@
             </tbody>
           </table>
         </div>
+        <div id="history-pagination"></div>
       </div>
     </section>
 
     <!-- Tab: Profile -->
-    <section id="tab-profile" class="tab-content hidden px-10">
+    <section id="tab-profile" class="tab-content hidden px-4 lg:px-10">
       <div class="max-w-3xl w-full">
         <div class="glass-card rounded-2xl shadow-[0_4px_20px_rgba(0,49,117,0.05)] border border-surface-variant p-8">
           <div class="flex items-center mb-8 pb-4 border-b border-outline-variant/50">
@@ -428,7 +606,8 @@
                 <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Nomor HP / WhatsApp</label>
                 <input
                   class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                  type="tel" id="profile-phone" required />
+                  type="tel" id="profile-phone" required pattern="[0-9]+" title="Nomor HP hanya boleh berisi angka"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
               </div>
               <div>
                 <label class="block font-label-sm text-sm text-on-surface-variant mb-2">Kata Sandi Baru
@@ -517,9 +696,33 @@
       window.location.href = 'login.html';
     }
 
+    // Toggle Sidebar on mobile
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+
+      if (sidebar.classList.contains('-translate-x-full')) {
+        // Open
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+        setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+      } else {
+        // Close
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        setTimeout(() => backdrop.classList.add('hidden'), 300);
+      }
+    }
+
     // Switch Tabs
     function switchTab(e, tabId) {
       if (e) e.preventDefault();
+
+      // Close sidebar on mobile
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+        toggleSidebar();
+      }
 
       // Sidebar buttons navigation classes sync
       const activeNavClasses = "bg-surface-container-high text-primary font-bold border-r-4 border-primary shadow-sm".split(" ");
@@ -531,7 +734,7 @@
       });
 
       // Set active nav link
-      const targetNavId = tabId === 'tab-booking' ? 'nav-booking' : tabId === 'tab-history' ? 'nav-history' : 'nav-profile';
+      const targetNavId = tabId.replace('tab-', 'nav-');
       const targetNav = document.getElementById(targetNavId);
       if (targetNav) {
         inactiveNavClasses.forEach(cls => targetNav.classList.remove(cls));
@@ -549,31 +752,93 @@
       // Update Header Text dynamically
       const titles = {
         'tab-booking': 'Pesan Lapangan',
-        'tab-history': 'Riwayat Reservasi',
+        'tab-active': 'Booking Aktif',
+        'tab-history': 'Riwayat Booking',
+        'tab-payments': 'Riwayat Pembayaran',
+        'tab-notifications': 'Pusat Notifikasi',
         'tab-profile': 'Profil Saya'
       };
       const descriptions = {
         'tab-booking': 'Selamat datang kembali di portal booking GOR Jasa Tirta II',
-        'tab-history': 'Pantau status dan detail pemesanan lapangan Anda',
-        'tab-profile': 'Keloa informasi akun dan pengaturan keamanan Anda'
+        'tab-active': 'Pantau sisa waktu pembayaran dan kelola status booking aktif Anda',
+        'tab-history': 'Pantau status dan detail pemesanan lapangan Anda yang telah selesai/batal',
+        'tab-payments': 'Daftar riwayat transaksi pembayaran sewa lapangan Anda',
+        'tab-notifications': 'Pemberitahuan penting mengenai status booking dan akun Anda',
+        'tab-profile': 'Kelola informasi akun dan pengaturan keamanan Anda'
       };
 
       document.getElementById('page-title').innerText = titles[tabId];
       document.getElementById('page-desc').innerText = descriptions[tabId];
 
+      // Reset intervals if leaving active tab
+      if (tabId !== 'tab-active' && countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+
       // Load data
       if (tabId === 'tab-booking') {
         loadWeeklySchedule();
+      } else if (tabId === 'tab-active') {
+        loadActiveBookings();
       } else if (tabId === 'tab-history') {
         loadHistoryData();
+      } else if (tabId === 'tab-payments') {
+        loadPaymentsData();
+      } else if (tabId === 'tab-notifications') {
+        loadNotificationsData();
       } else if (tabId === 'tab-profile') {
         loadProfileData();
       }
+
+      // Update badge
+      loadNotificationBadge();
+      loadActiveBookingsBadge();
     }
 
     // Format Rupiah
     function formatRupiah(num) {
       return 'Rp' + parseFloat(num).toLocaleString('id-ID');
+    }
+
+    function renderPaginationControls(containerId, pagination, onPageChangeName) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      if (!pagination || pagination.totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const { page, totalPages, totalData, limit } = pagination;
+      const startItem = (page - 1) * limit + 1;
+      const endItem = Math.min(page * limit, totalData);
+
+      container.innerHTML = `
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-surface-container-low border-t border-outline-variant">
+          <div class="text-xs text-on-surface-variant font-medium">
+            Menampilkan <strong>${startItem}</strong> - <strong>${endItem}</strong> dari <strong>${totalData}</strong> data
+          </div>
+          <div class="flex items-center gap-2">
+            <button 
+              onclick="${onPageChangeName}(${page - 1})"
+              ${page <= 1 ? 'disabled class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed text-xs font-semibold flex items-center gap-1 bg-white"' : 'class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container text-xs font-semibold flex items-center gap-1 bg-white transition-all"'}
+            >
+              <span class="material-symbols-outlined text-[16px]">chevron_left</span> Sebelumnya
+            </button>
+            
+            <span class="text-xs font-bold px-3 py-1.5 bg-primary/10 text-primary rounded-lg">
+              ${page} / ${totalPages}
+            </span>
+
+            <button 
+              onclick="${onPageChangeName}(${page + 1})"
+              ${page >= totalPages ? 'disabled class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed text-xs font-semibold flex items-center gap-1 bg-white"' : 'class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container text-xs font-semibold flex items-center gap-1 bg-white transition-all"'}
+            >
+              Selanjutnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      `;
     }
 
     // Helper functions
@@ -589,9 +854,9 @@
     }
 
     // Load History Data
-    async function loadHistoryData() {
+    async function loadHistoryData(page = 1) {
       try {
-        const response = await fetch('/api/bookings/my', {
+        const response = await fetch(`/api/bookings/my?page=${page}&limit=10`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -602,19 +867,22 @@
         tbody.innerHTML = '';
 
         if (result.success) {
-          if (result.bookings.length === 0) {
+          // Filter only completed, cancelled, or expired bookings for history
+          const historyBookings = result.bookings.filter(b =>
+            ['COMPLETED', 'CANCELLED', 'EXPIRED'].includes(b.status.toUpperCase())
+          );
+
+          if (historyBookings.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium">Belum ada riwayat booking.</td></tr>';
           } else {
-            result.bookings.forEach(b => {
+            historyBookings.forEach(b => {
               const tr = document.createElement('tr');
               tr.className = "hover:bg-surface-container-lowest transition-colors";
 
-              let badgeStatusColor = "bg-gray-100 text-gray-700";
-              if (b.status.toLowerCase() === 'approved' || b.status.toLowerCase() === 'upcoming') {
-                badgeStatusColor = "bg-green-50 text-green-700 border-green-200 border";
-              } else if (b.status.toLowerCase() === 'pending') {
-                badgeStatusColor = "bg-yellow-50 text-yellow-700 border-yellow-200 border";
-              } else if (b.status.toLowerCase() === 'rejected' || b.status.toLowerCase() === 'cancelled') {
+              let badgeStatusColor = "bg-gray-100 text-gray-750 border-gray-200 border";
+              if (b.status.toUpperCase() === 'COMPLETED') {
+                badgeStatusColor = "bg-gray-100 text-gray-700 border-gray-200 border";
+              } else if (b.status.toUpperCase() === 'CANCELLED' || b.status.toUpperCase() === 'EXPIRED') {
                 badgeStatusColor = "bg-red-50 text-red-700 border-red-200 border";
               }
 
@@ -630,12 +898,462 @@
               tbody.appendChild(tr);
             });
           }
+          renderPaginationControls('history-pagination', result.pagination, 'loadHistoryData');
         }
       } catch (err) {
         console.error(err);
         showToast('Gagal memuat riwayat booking.', 'error');
       }
     }
+
+    // Load Active Bookings Data
+    let countdownInterval = null;
+    let activeBookingsData = [];
+
+    async function loadActiveBookings() {
+      try {
+        const response = await fetch('/api/bookings/my', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        const container = document.getElementById('active-bookings-container');
+        container.innerHTML = '';
+
+        if (result.success) {
+          // Filter only active bookings: WAITING_PAYMENT, WAITING_VERIFICATION, CONFIRMED
+          const activeBookings = result.bookings.filter(b =>
+            ['WAITING_PAYMENT', 'WAITING_VERIFICATION', 'CONFIRMED'].includes(b.status.toUpperCase())
+          );
+
+          if (activeBookings.length === 0) {
+            container.innerHTML = '<div class="col-span-full py-10 text-center text-on-surface-variant font-medium bg-white rounded-xl border border-dashed border-gray-200">Tidak ada booking aktif saat ini. Silakan lakukan pemesanan di menu Booking Lapangan.</div>';
+            return;
+          }
+
+          // Fetch Settings first to get BCA bank info
+          const settingsResponse = await fetch('/api/settings');
+          const settingsResult = await settingsResponse.json();
+          const settings = settingsResult.success ? settingsResult.settings : {};
+
+          activeBookings.forEach(b => {
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-2xl shadow-sm border border-surface-variant p-6 space-y-4 relative overflow-hidden flex flex-col justify-between";
+
+            let statusBadge = '';
+            let statusAction = '';
+
+            if (b.status.toUpperCase() === 'WAITING_PAYMENT') {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200 text-xs font-bold uppercase">Menunggu Pembayaran</span>`;
+
+              // Countdown timer placeholder
+              statusAction = `
+                <div class="bg-red-50 border border-red-100 rounded-xl p-4 text-xs space-y-2 mt-3">
+                  <div class="flex justify-between items-center text-red-950 font-semibold">
+                    <span>Sisa Waktu Pembayaran:</span>
+                    <span class="font-mono text-sm bg-red-100 px-2 py-0.5 rounded text-red-700" id="countdown-${b.id}">--:--</span>
+                  </div>
+                  <div class="text-[11px] text-red-800 leading-relaxed">
+                    Silakan transfer <strong>${formatRupiah(b.total_price)}</strong> ke:<br>
+                    <strong>${settings.bank_name || 'Bank BCA'}</strong> Rek: <strong>${settings.bank_account || '1234567890'}</strong> a.n. <strong>${settings.bank_recipient || 'GOR PJT II'}</strong>.
+                  </div>
+                </div>
+                <button onclick="openUploadModal('${b.id}', '${settings.bank_name || 'Bank BCA'}', '${settings.bank_account || '1234567890'}', '${settings.bank_recipient || 'GOR PJT II'}', ${b.total_price})"
+                  class="w-full mt-4 bg-primary text-white hover:bg-[#003d8a] text-xs font-bold py-2.5 rounded-lg flex items-center justify-center gap-1 transition-all">
+                  <span class="material-symbols-outlined text-[16px]">upload_file</span> Unggah Bukti Transfer
+                </button>
+              `;
+            } else if (b.status.toUpperCase() === 'WAITING_VERIFICATION') {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold uppercase">Menunggu Verifikasi</span>`;
+              statusAction = `
+                <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs text-blue-900 leading-relaxed mt-3 flex items-start gap-2">
+                  <span class="material-symbols-outlined text-blue-600 text-[18px]">info</span>
+                  <div>
+                    Bukti pembayaran Anda telah diunggah dan sedang diperiksa oleh Administrator GOR. <br>
+                    <strong>Status akan berubah setelah disetujui.</strong>
+                  </div>
+                </div>
+              `;
+            } else if (b.status.toUpperCase() === 'CONFIRMED') {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200 text-xs font-bold uppercase">Dikonfirmasi</span>`;
+              statusAction = `
+                <div class="bg-green-50 border border-green-100 rounded-xl p-4 text-xs text-green-950 leading-relaxed mt-3 flex items-start gap-2">
+                  <span class="material-symbols-outlined text-green-600 text-[18px]">check_circle</span>
+                  <div>
+                    Pemesanan lapangan Anda telah dikonfirmasi dan jadwal dikunci. Silakan datang ke GOR tepat waktu dan tunjukkan Booking ID Anda saat kedatangan.
+                  </div>
+                </div>
+              `;
+            }
+
+            card.innerHTML = `
+              <div class="space-y-3">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-bold text-gray-900">${b.id}</h4>
+                    <p class="text-xs text-gray-500">${formatDateIndo(b.booking_date)}</p>
+                  </div>
+                  ${statusBadge}
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 text-xs border-t border-b py-2 border-gray-100">
+                  <div>
+                    <span class="text-gray-500 block">Olahraga</span>
+                    <strong class="text-gray-800">${b.sport}</strong>
+                  </div>
+                  <div>
+                    <span class="text-gray-500 block">Jam Main</span>
+                    <strong class="text-gray-800">${b.start_time.substring(0, 5)} - ${b.end_time.substring(0, 5)}</strong>
+                  </div>
+                  <div class="mt-1">
+                    <span class="text-gray-500 block">Durasi</span>
+                    <strong class="text-gray-800">${b.duration} Jam</strong>
+                  </div>
+                  <div class="mt-1">
+                    <span class="text-gray-500 block">Total Tagihan</span>
+                    <strong class="text-primary font-bold">${formatRupiah(b.total_price)}</strong>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-4">
+                ${statusAction}
+              </div>
+            `;
+            container.appendChild(card);
+          });
+
+          // Start ticking countdown timers
+          activeBookingsData = activeBookings.filter(b => b.status.toUpperCase() === 'WAITING_PAYMENT');
+          startCountdownTicking();
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat booking aktif.', 'error');
+      }
+    }
+
+    function startCountdownTicking() {
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      const tick = () => {
+        const now = new Date().getTime();
+        let activeTimers = 0;
+
+        activeBookingsData.forEach(b => {
+          const el = document.getElementById(`countdown-${b.id}`);
+          if (!el) return;
+
+          const endTime = new Date(b.countdown_end).getTime();
+          const distance = endTime - now;
+
+          if (distance <= 0) {
+            el.innerText = "EXPIRED";
+            el.className = "font-mono text-sm bg-red-100 px-2 py-0.5 rounded text-red-650 font-bold";
+            // Reload active bookings to update state to EXPIRED
+            setTimeout(loadActiveBookings, 2000);
+          } else {
+            activeTimers++;
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            el.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }
+        });
+
+        if (activeTimers === 0) {
+          clearInterval(countdownInterval);
+        }
+      };
+
+      tick();
+      countdownInterval = setInterval(tick, 1000);
+    }
+
+    // Load Payments Data
+    async function loadPaymentsData(page = 1) {
+      try {
+        const response = await fetch(`/api/bookings/my?page=${page}&limit=10`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        const tbody = document.getElementById('payments-history-tbody');
+        tbody.innerHTML = '';
+
+        if (result.success) {
+          // List bookings that have payments
+          const paymentBookings = result.bookings.filter(b => b.payment_status);
+
+          if (paymentBookings.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant font-medium">Belum ada riwayat transaksi pembayaran.</td></tr>';
+          } else {
+            paymentBookings.forEach(b => {
+              const tr = document.createElement('tr');
+              tr.className = "hover:bg-surface-container-lowest transition-colors border-b border-outline-variant/30";
+
+              let badgeStatus = "bg-gray-100 text-gray-700 border";
+              if (b.payment_status === 'PAID') {
+                badgeStatus = "bg-green-50 text-green-700 border-green-200 border";
+              } else if (b.payment_status === 'PENDING') {
+                badgeStatus = "bg-yellow-50 text-yellow-700 border-yellow-200 border";
+              } else if (b.payment_status === 'WAITING_VERIFICATION') {
+                badgeStatus = "bg-blue-50 text-blue-700 border-blue-200 border";
+              } else if (b.payment_status === 'REJECTED' || b.payment_status === 'EXPIRED') {
+                badgeStatus = "bg-red-50 text-red-700 border-red-200 border";
+              }
+
+              const proofHtml = b.proof_image
+                ? `<a href="${b.proof_image}" target="_blank" class="text-primary hover:underline font-semibold flex items-center gap-0.5"><span class="material-symbols-outlined text-[16px]">visibility</span> Lihat Resi</a>`
+                : `<span class="text-gray-400">-</span>`;
+
+              tr.innerHTML = `
+                <td class="px-6 py-4 font-mono font-semibold">${b.id}</td>
+                <td class="px-6 py-4"><strong>${formatDateIndo(b.booking_date)}</strong></td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-semibold">${b.sport}</span></td>
+                <td class="px-6 py-4 font-bold text-on-surface">${formatRupiah(b.total_price)}</td>
+                <td class="px-6 py-4 text-xs">${proofHtml}</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold uppercase ${badgeStatus}">${b.payment_status}</span></td>
+                <td class="px-6 py-4 text-xs text-on-surface-variant">${new Date(b.created_at).toLocaleString('id-ID')}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+          renderPaginationControls('payments-pagination', result.pagination, 'loadPaymentsData');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat riwayat pembayaran.', 'error');
+      }
+    }
+
+    // Load Notifications
+    async function loadNotificationsData() {
+      try {
+        const response = await fetch('/api/notifications', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+
+        const container = document.getElementById('notifications-list-container');
+        container.innerHTML = '';
+
+        if (result.success) {
+          if (result.notifications.length === 0) {
+            container.innerHTML = '<div class="py-10 text-center text-on-surface-variant font-medium bg-gray-50 rounded-xl border border-dashed border-gray-200">Tidak ada notifikasi untuk Anda saat ini.</div>';
+            return;
+          }
+
+          result.notifications.forEach(n => {
+            const card = document.createElement('div');
+            // Bold background for unread notifications
+            const unreadClass = n.is_read === 0
+              ? 'bg-blue-50/50 border-l-4 border-primary font-medium'
+              : 'bg-white border-l-4 border-gray-300';
+
+            card.className = `p-4 rounded-xl border border-gray-100 flex justify-between items-start gap-4 transition-all hover:bg-gray-50/80 ${unreadClass}`;
+
+            card.innerHTML = `
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5 ${n.is_read === 0 ? 'text-primary' : 'text-gray-400'}">
+                  ${n.is_read === 0 ? 'mark_chat_unread' : 'chat'}
+                </span>
+                <div>
+                  <p class="text-sm text-gray-850">${n.message}</p>
+                  <span class="text-[10px] text-gray-400 block mt-1">${new Date(n.created_at).toLocaleString('id-ID')}</span>
+                </div>
+              </div>
+              ${n.is_read === 0
+                ? `<button onclick="markNotificationRead(${n.id})" class="text-[11px] text-primary hover:underline font-bold flex items-center gap-0.5 whitespace-nowrap"><span class="material-symbols-outlined text-[14px]">done</span> Baca</button>`
+                : ''
+              }
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat notifikasi.', 'error');
+      }
+    }
+
+    async function markNotificationRead(id) {
+      try {
+        const response = await fetch('/api/notifications/read', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ id })
+        });
+        const result = await response.json();
+        if (result.success) {
+          loadNotificationsData();
+          loadNotificationBadge();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function markAllNotificationsAsRead() {
+      try {
+        const response = await fetch('/api/notifications/read', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        if (result.success) {
+          showToast('Semua notifikasi ditandai dibaca.', 'success');
+          loadNotificationsData();
+          loadNotificationBadge();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadNotificationBadge() {
+      try {
+        const response = await fetch('/api/notifications', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        if (result.success) {
+          const unreadCount = result.notifications.filter(n => n.is_read === 0).length;
+          const badge = document.getElementById('notification-badge');
+          if (badge) {
+            if (unreadCount > 0) {
+              badge.innerText = unreadCount;
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadActiveBookingsBadge() {
+      try {
+        const response = await fetch('/api/bookings/my', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await response.json();
+        if (result.success) {
+          const activeBookings = result.bookings.filter(b =>
+            ['WAITING_PAYMENT', 'WAITING_VERIFICATION', 'CONFIRMED'].includes(b.status.toUpperCase())
+          );
+          const count = activeBookings.length;
+          const badge = document.getElementById('active-booking-badge');
+          if (badge) {
+            if (count > 0) {
+              badge.innerText = count;
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Modal controls for upload proof
+    const uploadModal = document.getElementById('upload-proof-modal');
+    const uploadModalContent = document.getElementById('upload-proof-modal-content');
+    const uploadFileInput = document.getElementById('upload-file-input');
+    const imagePreviewContainer = document.getElementById('image-preview-container');
+    const imagePreview = document.getElementById('upload-image-preview');
+
+    function openUploadModal(bookingId, bankName, bankAccount, bankRecipient, amount) {
+      document.getElementById('upload-booking-id').value = bookingId;
+      document.getElementById('modal-bank-name').innerText = bankName;
+      document.getElementById('modal-bank-account').innerText = bankAccount;
+      document.getElementById('modal-bank-recipient').innerText = bankRecipient;
+      document.getElementById('modal-amount').innerText = formatRupiah(amount);
+
+      // Reset input & preview
+      uploadFileInput.value = '';
+      imagePreviewContainer.classList.add('hidden');
+      imagePreview.src = '';
+
+      uploadModal.classList.remove('hidden');
+      setTimeout(() => {
+        uploadModal.classList.remove('opacity-0');
+        uploadModalContent.classList.remove('translate-y-4');
+      }, 10);
+    }
+
+    function closeUploadModal() {
+      uploadModal.classList.add('opacity-0');
+      uploadModalContent.classList.add('translate-y-4');
+      setTimeout(() => {
+        uploadModal.classList.add('hidden');
+      }, 300);
+    }
+
+    // Image preview
+    uploadFileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreviewContainer.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Form submit upload
+    document.getElementById('payment-upload-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('bookingId', document.getElementById('upload-booking-id').value);
+      formData.append('proof', uploadFileInput.files[0]);
+
+      try {
+        const response = await fetch('/api/payments/upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showToast(result.message, 'success');
+          closeUploadModal();
+          loadActiveBookings();
+          loadNotificationBadge();
+          loadActiveBookingsBadge();
+        } else {
+          showToast(result.message || 'Gagal mengunggah bukti transfer.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Terjadi kesalahan koneksi saat mengunggah.', 'error');
+      }
+    });
 
     // Load Profile Settings
     async function loadProfileData() {
@@ -665,6 +1383,11 @@
       const nama = document.getElementById('profile-name').value;
       const nomor_hp = document.getElementById('profile-phone').value;
       const password = document.getElementById('profile-password').value;
+
+      if (!/^\d+$/.test(nomor_hp)) {
+        showToast('Nomor HP hanya boleh berisi angka.', 'error');
+        return;
+      }
 
       try {
         const response = await fetch('/api/auth/profile', {
@@ -865,7 +1588,6 @@
             <span class="text-xs text-on-surface-variant mb-1">60 Menit</span>
             <span class="font-bold text-on-surface mb-1">${timeRangeStr}</span>
             <div class="flex flex-col items-center mt-1">
-              <span class="text-[10px] text-on-surface-variant line-through">Rp120.000</span>
               <span class="text-sm text-[#00a3ff] font-bold">Rp100.000</span>
             </div>
           `;
@@ -924,10 +1646,28 @@
     });
 
     // Update Price Calculation
+    let pricePerHour = 100000;
+
+    async function loadDynamicPrice() {
+      try {
+        const response = await fetch('/api/settings');
+        const result = await response.json();
+        if (result.success && result.settings) {
+          pricePerHour = parseInt(result.settings.price_per_hour || '100000', 10);
+          const hourlyEl = document.getElementById('form-hourly-rate');
+          if (hourlyEl) {
+            hourlyEl.innerText = `${formatRupiah(pricePerHour)} / Jam`;
+          }
+          updatePrice();
+        }
+      } catch (err) {
+        console.error('Error loading dynamic price:', err);
+      }
+    }
+
     function updatePrice() {
       const duration = parseInt(formDuration.value, 10);
-      const rate = 100000;
-      const total = duration * rate;
+      const total = duration * pricePerHour;
       formTotalPrice.innerText = formatRupiah(total);
     }
     formDuration.addEventListener('change', updatePrice);
@@ -968,6 +1708,7 @@
           document.getElementById('form-sport').value = '';
 
           loadWeeklySchedule();
+          loadActiveBookingsBadge();
 
           setTimeout(() => {
             switchTab(null, 'tab-history');
@@ -999,6 +1740,11 @@
       const localNow = new Date(now.getTime() - (offset * 60 * 1000));
       activeDateStr = localNow.toISOString().split('T')[0];
     }
+
+    // Initialize dynamic configurations
+    loadDynamicPrice();
+    loadNotificationBadge();
+    loadActiveBookingsBadge();
 
     // Default to booking tab on load
     switchTab(null, 'tab-booking');

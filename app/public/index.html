@@ -147,7 +147,7 @@
         <!-- Availability Checker -->
         <div class="bg-blue-50 p-8 rounded-2xl border border-blue-100" id="cek-jadwal">
           <h2 class="text-2xl font-bold mb-6 text-gray-900">Cek Jadwal &amp; Ketersediaan</h2>
-          <form class="space-y-4" onsubmit="event.preventDefault(); redirectToCheckSchedule();">
+          <form class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Tanggal</label>
               <div class="relative">
@@ -157,23 +157,24 @@
               </div>
             </div>
             <div class="flex flex-col md:flex-row gap-4 items-end">
-              <div class="flex-grow">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Olahraga</label>
-                <select
-                  class="w-full border-gray-300 rounded-md shadow-sm focus:ring-pjt-blue focus:border-pjt-blue p-3"
-                  id="check-sport">
-                  <option value="">Pilih olahraga</option>
-                  <option value="Futsal">Futsal</option>
-                  <option value="Badminton">Badminton</option>
-                  <option value="Basket">Basket</option>
-                </select>
-              </div>
               <button
                 class="bg-pjt-blue text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition w-full md:w-auto"
                 type="submit">CEK JADWAL</button>
             </div>
             <p class="text-xs text-gray-500 mt-4">Temukan jadwal lapangan yang tersedia dengan cepat dan praktis.</p>
           </form>
+
+          <!-- Schedule Grid Container -->
+          <div id="public-schedule-container"
+            class="mt-6 hidden bg-white p-5 rounded-xl border border-gray-200 shadow-inner">
+            <h3 class="font-semibold text-sm text-gray-700 mb-3 border-t pt-4">Ketersediaan Lapangan Tanggal <span
+                id="selected-schedule-date"></span>:</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs" id="public-slots-grid">
+              <!-- Dynamic slots -->
+            </div>
+            <p class="text-[11px] text-gray-500 mt-3">* Klik pada slot Available (Tersedia) untuk memesan lapangan
+              secara langsung.</p>
+          </div>
         </div>
         <!-- About Us -->
         <div>
@@ -389,21 +390,134 @@
       }
     }
 
-    function redirectToCheckSchedule() {
-      const token = localStorage.getItem('token');
-      const userJson = localStorage.getItem('user');
+    // Set default date to today
+    const checkDateInput = document.getElementById('check-date');
+    if (checkDateInput) {
+      const today = new Date();
+      const offset = today.getTimezoneOffset();
+      const localToday = new Date(today.getTime() - (offset * 60 * 1000));
+      const todayStr = localToday.toISOString().split('T')[0];
+      checkDateInput.value = todayStr;
+      checkDateInput.min = todayStr;
+    }
 
+    async function loadPublicSchedule() {
       const checkDate = document.getElementById('check-date')?.value;
-      if (checkDate) {
-        sessionStorage.setItem('pre_booking_date', checkDate);
-      }
+      if (!checkDate) return;
 
-      if (token && userJson) {
-        const user = JSON.parse(userJson);
-        window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
-      } else {
-        window.location.href = 'login.html';
+      const container = document.getElementById('public-schedule-container');
+      const grid = document.getElementById('public-slots-grid');
+      const dateSpan = document.getElementById('selected-schedule-date');
+
+      dateSpan.innerText = new Date(checkDate).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      grid.innerHTML = '<div class="col-span-full text-center text-gray-500 py-4">Memuat jadwal...</div>';
+      container.classList.remove('hidden');
+
+      try {
+        const response = await fetch(`/api/bookings/schedule?date=${checkDate}`);
+        const result = await response.json();
+        grid.innerHTML = '';
+
+        if (result.success) {
+          // Fetch settings to get operational hours
+          const settingsResponse = await fetch('/api/settings');
+          const settingsResult = await settingsResponse.json();
+          let opStart = 8;
+          let opEnd = 22;
+          if (settingsResult.success && settingsResult.settings) {
+            opStart = parseInt((settingsResult.settings.operational_hours_start || '08:00').split(':')[0], 10);
+            opEnd = parseInt((settingsResult.settings.operational_hours_end || '22:00').split(':')[0], 10);
+          }
+
+          const now = new Date();
+          const offset = now.getTimezoneOffset();
+          const localNow = new Date(now.getTime() - (offset * 60 * 1000));
+          const todayStr = localNow.toISOString().split('T')[0];
+          const currentHour = now.getHours();
+
+          let hasSlots = false;
+          for (let h = opStart; h < opEnd; h++) {
+            hasSlots = true;
+            const hourStr = `${h.toString().padStart(2, '0')}:00`;
+            const nextHourStr = `${(h + 1).toString().padStart(2, '0')}:00`;
+            const timeRange = `${hourStr} - ${nextHourStr}`;
+
+            const booking = result.bookings.find(b => {
+              const bStart = parseInt(b.start_time.split(':')[0], 10);
+              const bEnd = parseInt(b.end_time.split(':')[0], 10);
+              return bStart <= h && bEnd > h;
+            });
+
+            let isPast = false;
+            if (checkDate < todayStr) {
+              isPast = true;
+            } else if (checkDate === todayStr && h < currentHour) {
+              isPast = true;
+            }
+
+            const slotEl = document.createElement('div');
+            slotEl.className = 'p-2.5 rounded border text-center font-medium transition-all ';
+
+            if (booking) {
+              const isConfirmed = booking.status === 'CONFIRMED';
+              const label = isConfirmed ? 'Booked' : 'Reserved';
+              const colorClass = isConfirmed
+                ? 'bg-red-50 text-red-700 border-red-200'
+                : 'bg-yellow-50 text-yellow-700 border-yellow-200';
+
+              slotEl.className += colorClass;
+              slotEl.innerHTML = `
+                <div>${timeRange}</div>
+                <div class="text-[10px] font-bold mt-1 uppercase">${label}</div>
+              `;
+            } else if (isPast) {
+              slotEl.className += 'bg-gray-100 text-gray-400 border-gray-200';
+              slotEl.innerHTML = `
+                <div>${timeRange}</div>
+                <div class="text-[10px] mt-1">-</div>
+              `;
+            } else {
+              slotEl.className += 'bg-green-50 text-green-700 border-green-200 cursor-pointer hover:bg-green-100 hover:shadow-sm';
+              slotEl.innerHTML = `
+                <div>${timeRange}</div>
+                <div class="text-[10px] font-bold mt-1 uppercase">Available</div>
+              `;
+              slotEl.addEventListener('click', () => {
+                sessionStorage.setItem('pre_booking_date', checkDate);
+                sessionStorage.setItem('pre_booking_time', hourStr);
+
+                const token = localStorage.getItem('token');
+                const userJson = localStorage.getItem('user');
+                if (token && userJson) {
+                  const user = JSON.parse(userJson);
+                  window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                } else {
+                  window.location.href = 'login.html';
+                }
+              });
+            }
+            grid.appendChild(slotEl);
+          }
+
+          if (!hasSlots) {
+            grid.innerHTML = '<div class="col-span-full text-center text-gray-500 py-4">Tidak ada jam operasional yang tersedia.</div>';
+          }
+        } else {
+          grid.innerHTML = `<div class="col-span-full text-center text-red-500 py-4">${result.message}</div>`;
+        }
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = '<div class="col-span-full text-center text-red-500 py-4">Gagal mengambil jadwal.</div>';
       }
+    }
+
+    // Bind event
+    const checkForm = document.querySelector('#cek-jadwal form');
+    if (checkForm) {
+      checkForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loadPublicSchedule();
+      });
     }
 
     function logout() {
